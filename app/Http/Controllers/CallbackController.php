@@ -55,7 +55,7 @@ class CallbackController extends Controller
                 ]
             ]
         ];
-return;
+
         //curlを使用してメッセージを返信する
         $ch = curl_init("https://api.line.me/v2/bot/message/reply");
         curl_setopt($ch, CURLOPT_POST, true);
