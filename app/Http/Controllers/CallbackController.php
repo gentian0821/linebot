@@ -38,10 +38,23 @@ class CallbackController extends Controller
     {
         $access_token = '83lp46KV9G7kxQwpadkxMI6+4X6d+ByUAY/pkAqZ+QTYbmknMS13VNiXDWPNp7WorKSGwA+aRKXxdHyipGRTeZ6nX5o4u5t1CGa0ciTuAykVTxJ4LS4gm9+APoQFqCfLltgJGtLqzwm0fOUuTWrCYQdB04t89/1O/w1cDnyilFU=';
 
+//        $param = $request->input();
+//        $message = $param['events'][0]['message'];
+//        $reply_token = $param["events"][0]["replyToken"];
+//        $post_data = [
+//            "replyToken" => $reply_token,
+//            "messages" => [
+//                [
+//                    "type" => "text",
+//                    "text" => $message["text"]
+//                ]
+//            ]
+//        ];
+
         //APIから送信されてきたイベントオブジェクトを取得
         $json_string = file_get_contents('php://input');
+        Log::info($json_string);
         $json_obj = json_decode($json_string);
-
         //イベントオブジェクトから必要な情報を抽出
         $message = $json_obj->{"events"}[0]->{"message"};
         $reply_token = $json_obj->{"events"}[0]->{"replyToken"};
