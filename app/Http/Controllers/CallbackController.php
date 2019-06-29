@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
@@ -14,9 +15,7 @@ class CallbackController extends Controller
      */
     public function index()
     {
-        return response()->json([
-            [ 'name' => 'Yohei' ]
-        ]);
+        return response()->json(['ok']);
     }
 
     /**
@@ -39,50 +38,68 @@ class CallbackController extends Controller
     {
         $access_token = '83lp46KV9G7kxQwpadkxMI6+4X6d+ByUAY/pkAqZ+QTYbmknMS13VNiXDWPNp7WorKSGwA+aRKXxdHyipGRTeZ6nX5o4u5t1CGa0ciTuAykVTxJ4LS4gm9+APoQFqCfLltgJGtLqzwm0fOUuTWrCYQdB04t89/1O/w1cDnyilFU=';
 
-//        $param = $request->input();
-//        $message = $param['events'][0]['message'];
-//        $reply_token = $param["events"][0]["replyToken"];
-//        $post_data = [
-//            "replyToken" => $reply_token,
-//            "messages" => [
-//                [
-//                    "type" => "text",
-//                    "text" => $message["text"]
-//                ]
-//            ]
-//        ];
-
-        //APIから送信されてきたイベントオブジェクトを取得
-        $json_string = file_get_contents('php://input');
-        Log::info($json_string);
-        Log::info(getallheaders());
-        $json_obj = json_decode($json_string);
-        //イベントオブジェクトから必要な情報を抽出
-        $message = $json_obj->{"events"}[0]->{"message"};
-        $reply_token = $json_obj->{"events"}[0]->{"replyToken"};
-        //ユーザーからのメッセージに対し、オウム返しをする
+        $param = $request->input();
+        $message = $param['events'][0]['message'];
+        $reply_token = $param["events"][0]["replyToken"];
         $post_data = [
             "replyToken" => $reply_token,
             "messages" => [
                 [
                     "type" => "text",
-                    "text" => $message->{"text"}
+                    "text" => $message["text"]
                 ]
             ]
         ];
 
+        var_dump($post_data);
+        //APIから送信されてきたイベントオブジェクトを取得
+//        $json_string = file_get_contents('php://input');
+//        Log::info($json_string);
+//        $json_obj = json_decode($json_string);
+//        //イベントオブジェクトから必要な情報を抽出
+//        $message = $json_obj->{"events"}[0]->{"message"};
+//        $reply_token = $json_obj->{"events"}[0]->{"replyToken"};
+//        //ユーザーからのメッセージに対し、オウム返しをする
+//        $post_data = [
+//            "replyToken" => $reply_token,
+//            "messages" => [
+//                [
+//                    "type" => "text",
+//                    "text" => $message->{"text"}
+//                ]
+//            ]
+//        ];
+//        var_dump($post_data);
+//        return;
+
+        $client = new Client([
+            'base_uri' => 'https://api.line.me',
+        ]);
+        $headers = [
+            'Content-Type' => 'application/json; charser=UTF-8',
+            'Authorization' => 'Bearer ' . $access_token,
+        ];
+        $response = $client->request(
+            'POST',
+            '/v2/bot/message/reply',
+            [
+                'json' => $post_data,
+                'headers' => $headers
+            ]
+        );
+        var_dump($response);
         //curlを使用してメッセージを返信する
-        $ch = curl_init("https://api.line.me/v2/bot/message/reply");
-        curl_setopt($ch, CURLOPT_POST, true);
-        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($post_data));
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-            'Content-Type: application/json; charser=UTF-8',
-            'Authorization: Bearer ' . $access_token
-        ));
-        $result = curl_exec($ch);
-        curl_close($ch);
+//        $ch = curl_init("https://api.line.me/v2/bot/message/reply");
+//        curl_setopt($ch, CURLOPT_POST, true);
+//        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
+//        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+//        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($post_data));
+//        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+//            'Content-Type: application/json; charser=UTF-8',
+//            'Authorization: Bearer ' . $access_token
+//        ));
+//        $result = curl_exec($ch);
+//        curl_close($ch);
     }
 
     /**
