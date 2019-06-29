@@ -50,7 +50,7 @@ class CallbackController extends Controller
             ]
         );
 
-        Log::info($response);
+        Log::info($response->getBody());
 
         return response()->json(['ok']);
     }
