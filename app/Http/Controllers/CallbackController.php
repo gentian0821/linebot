@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Log;
 
 class CallbackController extends Controller
@@ -19,16 +20,6 @@ class CallbackController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -36,114 +27,50 @@ class CallbackController extends Controller
      */
     public function store(Request $request)
     {
-        $access_token = '83lp46KV9G7kxQwpadkxMI6+4X6d+ByUAY/pkAqZ+QTYbmknMS13VNiXDWPNp7WorKSGwA+aRKXxdHyipGRTeZ6nX5o4u5t1CGa0ciTuAykVTxJ4LS4gm9+APoQFqCfLltgJGtLqzwm0fOUuTWrCYQdB04t89/1O/w1cDnyilFU=';
-
         $param = $request->input();
-        $message = $param['events'][0]['message'];
-        $reply_token = $param["events"][0]["replyToken"];
-        $post_data = [
-            "replyToken" => $reply_token,
-            "messages" => [
-                [
-                    "type" => "text",
-                    "text" => $message["text"]
-                ]
-            ]
-        ];
 
-        var_dump($post_data);
-        //APIから送信されてきたイベントオブジェクトを取得
-//        $json_string = file_get_contents('php://input');
-//        Log::info($json_string);
-//        $json_obj = json_decode($json_string);
-//        //イベントオブジェクトから必要な情報を抽出
-//        $message = $json_obj->{"events"}[0]->{"message"};
-//        $reply_token = $json_obj->{"events"}[0]->{"replyToken"};
-//        //ユーザーからのメッセージに対し、オウム返しをする
-//        $post_data = [
-//            "replyToken" => $reply_token,
-//            "messages" => [
-//                [
-//                    "type" => "text",
-//                    "text" => $message->{"text"}
-//                ]
-//            ]
-//        ];
-//        var_dump($post_data);
-//        return;
+        Log::info($param);
 
-        $client = new Client([
-            'base_uri' => 'https://api.line.me',
-        ]);
-        $headers = [
-            'Content-Type' => 'application/json; charser=UTF-8',
-            'Authorization' => 'Bearer ' . $access_token,
-        ];
+        $client = new Client(['base_uri' => Config::get('const.line_base_uri')]);
+
         $response = $client->request(
             'POST',
-            '/v2/bot/message/reply',
+            Config::get('const.line_reply_api'),
             [
-                'json' => $post_data,
-                'headers' => $headers
+                'json' => [
+                    "replyToken" => $param["events"][0]["replyToken"],
+                    "messages" => [
+                        $this->reply_info($param['events'][0]['message']["text"])
+                    ]
+                ],
+                'headers' => [
+                    'Content-Type' => 'application/json; charser=UTF-8',
+                    'Authorization' => 'Bearer ' . Config::get('const.line_access_token'),
+                ]
             ]
         );
-        var_dump($response);
-        //curlを使用してメッセージを返信する
-//        $ch = curl_init("https://api.line.me/v2/bot/message/reply");
-//        curl_setopt($ch, CURLOPT_POST, true);
-//        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
-//        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-//        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($post_data));
-//        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-//            'Content-Type: application/json; charser=UTF-8',
-//            'Authorization: Bearer ' . $access_token
-//        ));
-//        $result = curl_exec($ch);
-//        curl_close($ch);
+
+        Log::info($response);
+
+        return response()->json(['ok']);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
+    private function reply_info($push_text) {
+        $result = [
+            "type" => "text",
+            "text" => $push_text
+        ];
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
+        if (strpos($push_text, '登録') !== false) {
+            $result['text'] = '登録したよー！';
+        }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
+//        $result = [
+//            "type" => "sticker",
+//            "packageId" => '11538',
+//            'stickerId' => '51626531'
+//        ];
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        return $result;
     }
 }
