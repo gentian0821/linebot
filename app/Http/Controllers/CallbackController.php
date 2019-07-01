@@ -63,6 +63,11 @@ class CallbackController extends Controller
             return $result;
         }
 
+        $result = $this->fetch($push_text);
+        if ($result) {
+            return $result;
+        }
+
         return [
             'type' => 'text',
             'text' => $push_text
@@ -107,7 +112,7 @@ class CallbackController extends Controller
 
         $message = 'お知らせ予定だよー\n';
         foreach ($tasks as $task) {
-            $message .= $task->reserved_at . ' ' . $task->message . '\n';
+            $message .= $task->reserved_at . ' ' . $task->send_message . '\n';
         }
 
         return [
