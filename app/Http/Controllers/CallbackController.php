@@ -112,7 +112,8 @@ class CallbackController extends Controller
 
         $message = "お知らせ予定だよー！\n";
         foreach ($tasks as $task) {
-            $message .= date_format($task->reserved_at, 'Y/m/d G:i') . ' ' . $task->send_message . "\n";
+            $date = new \DateTime($task->reserved_at);
+            $message .= $date->format('Y/m/d G:i') . ' ' . $task->send_message . "\n";
         }
 
         return [
