@@ -85,7 +85,7 @@ class CallbackController extends Controller
 
         $task = new Task;
         $task->send_to = $send_to;
-        $task->message = $message_matches[1];
+        $task->send_message = $message_matches[1];
         $task->reserved_at = sprintf('2019-%02d-%02d %02d:00:00', $date_matches[1], $date_matches[2], $date_matches[3]);
 
         $task->save();
