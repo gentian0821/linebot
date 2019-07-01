@@ -110,10 +110,10 @@ class CallbackController extends Controller
 
         $tasks = Task::where('reserved_at', '>', date('Y-m-d H:i:s'))->orderBy('reserved_at')->get();
 
-        $message = "お知らせ予定だよー！\n";
+        $message = 'お知らせ予定だよー！';
         foreach ($tasks as $task) {
             $date = new \DateTime($task->reserved_at);
-            $message .= $date->format('Y/m/d G:i') . ' ' . $task->send_message . "\n";
+            $message .=  "\n" . $date->format('Y/m/d G:i') . ' ' . $task->send_message;
         }
 
         return [
