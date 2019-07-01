@@ -75,7 +75,7 @@ class CallbackController extends Controller
             return [];
         }
 
-        if (!preg_match('/^(\d{1,2}\/\d{1,2}) (\d{1,2})/u',$push_text, $date_matches)) {
+        if (!preg_match('/^(\d{1,2})\/(\d{1,2}) (\d{1,2})/u',$push_text, $date_matches)) {
             return [];
         }
 
@@ -83,7 +83,6 @@ class CallbackController extends Controller
             return [];
         }
 
-        Log::info($date_matches);
         $task = new Task;
         $task->send_to = $send_to;
         $task->message = $message_matches[1];
