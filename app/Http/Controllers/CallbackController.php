@@ -83,6 +83,7 @@ class CallbackController extends Controller
             return [];
         }
 
+        Log::info($date_matches);
         $task = new Task;
         $task->send_to = $send_to;
         $task->message = $message_matches[1];
