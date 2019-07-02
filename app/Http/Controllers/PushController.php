@@ -23,6 +23,7 @@ class PushController extends Controller
     {
         $tasks = Task::where('reserved_at', date('Y-m-d H:00:00'))->get();
 
+        Log::info(print_r(date('Y-m-d H:00:00'), true));
         Log::info(print_r($tasks, true));
         $message_objects = [];
         foreach ($tasks as $task) {
