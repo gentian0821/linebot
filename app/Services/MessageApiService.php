@@ -27,7 +27,6 @@ class MessageApiService
      */
     public function reply($messages, $replyToken)
     {
-        $reply_api = Config::get('const.line_reply_api');
         $options = [
             'json' => [
                 "replyToken" => $replyToken,
@@ -36,25 +35,24 @@ class MessageApiService
             'headers' => $this->headers,
         ];
 
-        return $this->client->request('POST', $reply_api, $options);
+        return $this->client->request('POST', Config::get('const.line_reply_api'), $options);
     }
 
     /**
      * @param $messages
-     * @param $to
+     * @param $send_to
      * @return mixed|\Psr\Http\Message\ResponseInterface
      */
-    public function push($messages, $to)
+    public function push($messages, $send_to)
     {
-        $push_api = Config::get('const.line_push_api');
         $options = [
             'json' => [
-                "to" => $to,
+                "to" => $send_to,
                 "messages" => $messages
             ],
             'headers' => $this->headers,
         ];
 
-        return $this->client->request('POST', $push_api, $options);
+        return $this->client->request('POST', Config::get('const.line_push_api'), $options);
     }
 }

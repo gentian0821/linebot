@@ -7,4 +7,6 @@ return [
     'line_base_uri' => 'https://api.line.me',
 
     'line_reply_api' => '/v2/bot/message/reply',
+
+    'line_push_api' => '/v2/bot/message/push',
 ];

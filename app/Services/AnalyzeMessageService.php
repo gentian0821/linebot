@@ -12,7 +12,8 @@ class AnalyzeMessageService
      */
     public function reply_message($events)
     {
-        $result = $this->regist($events['message']["text"], $events['source']['userId']);
+        $send_to = $events['source']['roomId'] ?? $events['source']['userId'];
+        $result = $this->regist($events['message']["text"], $send_to);
         if ($result) {
             return $result;
         }
