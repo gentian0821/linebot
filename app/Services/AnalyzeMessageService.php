@@ -18,7 +18,7 @@ class AnalyzeMessageService
             return $result;
         }
 
-        $result = $this->fetch($events['message']["text"]);
+        $result = $this->fetch($events['message']["text"], $send_to);
         if ($result) {
             return $result;
         }
@@ -63,14 +63,16 @@ class AnalyzeMessageService
 
     /**
      * @param $push_text
+     * @param $send_to
      * @return array
      */
-    private function fetch($push_text) {
+    private function fetch($push_text, $send_to) {
         if (strpos($push_text, 'リスト') === false) {
             return [];
         }
 
-        $tasks = Task::where('reserved_at', '>', date('Y-m-d H:i:s'))->orderBy('reserved_at')->get();
+        $tasks = Task::where('reserved_at', '>', date('Y-m-d H:i:s'))
+            ->where('send_to', $send_to)->orderBy('reserved_at')->get();
 
         $message = 'お知らせ予定だよー！';
         foreach ($tasks as $task) {
