@@ -22,6 +22,8 @@ class PushController extends Controller
     {
         $tasks = Task::where('reserved_at', date('Y-m-d H:00:00'))->get();
 
+        Log::info('LINE_ACCESS_TOKEN: ' . env('LINE_ACCESS_TOKEN'));
+
         $message_objects = [];
         foreach ($tasks as $task) {
             $message_objects[$task->send_to][] = [
