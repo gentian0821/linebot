@@ -14,7 +14,7 @@ class AnalyzeMessageService
     {
         $send_to = $events['source']['roomId'] ?? $events['source']['userId'];
 
-        $result = $this->regist_datetimepicker($events['message']["text"]);
+        $result = $this->regist_datetimepicker($events['message']["text"], $send_to);
         if ($result) {
             return $result;
         }
