@@ -161,6 +161,13 @@ class AnalyzeMessageService
      */
     private function regist_postback($postback)
     {
+        if (!isset($postback['params'])) {
+            return [
+                'type' => 'text',
+                'text' => 'やめたよー！！'
+            ];
+        }
+
         $data = explode('&', $postback['data']);
 
         $date_time = new \DateTime($postback['params']['datetime']);
