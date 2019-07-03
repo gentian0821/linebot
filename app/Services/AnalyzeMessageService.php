@@ -12,7 +12,7 @@ class AnalyzeMessageService
      */
     public function reply_message($events)
     {
-        if ($events['postback']) {
+        if (isset($events['postback'])) {
             return $this->regist_postback($events['postback']);
         }
 
