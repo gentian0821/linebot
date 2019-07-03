@@ -72,18 +72,30 @@ class AnalyzeMessageService
         ];
     }
 
-    private function regist_datetimepicker($push_text)
+    private function regist_datetimepicker($push_text, $send_to)
     {
         if (!preg_match('/^登録 (.*)/u',$push_text, $matches)) {
             return [];
         }
 
+        $template = [
+            'type'    => 'buttons',
+            'text'    => 'いつにするー？',
+            'actions' => [
+                [
+                    'type' => 'datetimepicker',
+                    'label' => '日時を選ぶ',
+                    'mode' => 'datetime',
+                    'data' => 'send_message=' . $matches[1] . '&send_to=' . $send_to,
+                    'initial' => date('Y-m-d\TH:00:00'),
+                ]
+            ]
+        ];
+
         return [
-            'type' => 'datetimepicker',
-            'label' => '日時を選んでねー！',
-            'mode' => 'datetime',
-            'data' => $matches[1],
-            'initial' => date('Y-m-d\TH:00:00'),
+            'type'     => 'template',
+            'altText'  => '代替テキスト',
+            'template' => $template
         ];
     }
 
