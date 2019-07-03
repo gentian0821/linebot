@@ -12,6 +12,10 @@ class AnalyzeMessageService
      */
     public function reply_message($events)
     {
+        if ($events['postback']) {
+            return $this->regist_postback($events['postback']);
+        }
+
         $send_to = $events['source']['roomId'] ?? $events['source']['userId'];
 
         $result = $this->regist_datetimepicker($events['message']["text"], $send_to);
@@ -146,6 +150,30 @@ class AnalyzeMessageService
         return [
             'type' => 'text',
             'text' => '削除したよー！'
+        ];
+    }
+
+
+    /**
+     * @param $push_text
+     * @param $send_to
+     * @return array
+     */
+    private function regist_postback($postback)
+    {
+        $data = explode('&', $postback['data']);
+
+        $date_time = new \DateTime($postback['datetime']);
+        $task = new Task;
+        $task->send_to = explode('=', $data[1])[1];
+        $task->send_message = explode('=', $data[0])[1];
+        $task->reserved_at = $date_time->format('Y-m-d H:i:s');
+
+        $task->save();
+
+        return [
+            'type' => 'text',
+            'text' => '登録したよー！'
         ];
     }
 }
