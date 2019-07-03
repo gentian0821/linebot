@@ -87,7 +87,7 @@ class AnalyzeMessageService
                     'label' => '日時を選ぶ',
                     'mode' => 'datetime',
                     'data' => 'send_message=' . $matches[1] . '&send_to=' . $send_to,
-                    'initial' => date('Y-m-d\TH:00:00'),
+                    'initial' => date('Y-m-d\TH:00'),
                 ],
                 [
                     'type' => 'postback',
