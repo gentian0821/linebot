@@ -124,7 +124,7 @@ class AnalyzeMessageService
         $message = "お知らせ予定だよー！\n------------------";
         foreach ($tasks as $task) {
             $date = new \DateTime($task->reserved_at);
-            $message .=  "\n" . $date->format('Y/m/d G:i') . ' ' . $task->send_message;
+            $message .=  "\n" . $task->id . ': ' . $date->format('Y/m/d G:i') . ' ' . $task->send_message;
         }
 
         return [
@@ -139,7 +139,7 @@ class AnalyzeMessageService
             return [];
         }
 
-        if (!preg_match('/^([0-9]{4,}).*/u',$push_text, $id_matches)) {
+        if (!preg_match('/^([0-9]{1,}).*/u',$push_text, $id_matches)) {
             return [];
         }
 
@@ -163,7 +163,7 @@ class AnalyzeMessageService
     {
         $data = explode('&', $postback['data']);
 
-        $date_time = new \DateTime($postback['datetime']);
+        $date_time = new \DateTime($postback['params']['datetime']);
         $task = new Task;
         $task->send_to = explode('=', $data[1])[1];
         $task->send_message = explode('=', $data[0])[1];
