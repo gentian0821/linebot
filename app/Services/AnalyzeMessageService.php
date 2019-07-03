@@ -135,7 +135,7 @@ class AnalyzeMessageService
 
     private function delete($push_text)
     {
-        if (strpos($push_text, '消して') === false || strpos($push_text, '削除') === false) {
+        if (strpos($push_text, '消して') === false && strpos($push_text, '削除') === false) {
             return [];
         }
 
@@ -167,7 +167,7 @@ class AnalyzeMessageService
         $task = new Task;
         $task->send_to = explode('=', $data[1])[1];
         $task->send_message = explode('=', $data[0])[1];
-        $task->reserved_at = $date_time->format('Y-m-d H:i:s');
+        $task->reserved_at = $date_time->format('Y-m-d H:00:00');
 
         $task->save();
 
