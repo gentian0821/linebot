@@ -38,10 +38,36 @@ class AnalyzeMessageService
             return $result;
         }
 
-        return [
-            'type' => 'text',
-            'text' => $events['message']["text"]
+        $key = rand(1,4);
+
+        $default_messages = [
+            1 => [
+                'type' => 'text',
+                'text' => 'ふぁいしーふぉーだよー！'
+            ],
+            2 => [
+                'type' => 'text',
+                'text' => $events['message']["text"]
+            ],
+            3 => [
+                [
+                    'type' => 'text',
+                    'text' => 'かっくん！！'
+                ],
+                [
+                    'type' => 'image',
+                    'originalContentUrl' => 'https://linebot-fayc4.herokuapp.com/img/kakkun2.jpg',
+                    'previewImageUrl'    => 'https://linebot-fayc4.herokuapp.com/img/kakkun2_thum.jpg'
+                ]
+            ],
+            4 => [
+                'type' => 'image',
+                'originalContentUrl' => 'https://linebot-fayc4.herokuapp.com/img/yuika2.jpg',
+                'previewImageUrl'    => 'https://linebot-fayc4.herokuapp.com/img/yuika2_thum.jpg'
+            ]
         ];
+
+        return $default_messages[$key];
     }
 
     /**
