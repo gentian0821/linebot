@@ -50,15 +50,9 @@ class AnalyzeMessageService
                 'text' => $events['message']["text"]
             ],
             3 => [
-                [
-                    'type' => 'text',
-                    'text' => 'かっくん！！'
-                ],
-                [
-                    'type' => 'image',
-                    'originalContentUrl' => 'https://linebot-fayc4.herokuapp.com/img/kakkun2.jpg',
-                    'previewImageUrl'    => 'https://linebot-fayc4.herokuapp.com/img/kakkun2_thum.jpg'
-                ]
+                'type' => 'image',
+                'originalContentUrl' => 'https://linebot-fayc4.herokuapp.com/img/kakkun2.jpg',
+                'previewImageUrl'    => 'https://linebot-fayc4.herokuapp.com/img/kakkun2_thum.jpg'
             ],
             4 => [
                 'type' => 'image',
