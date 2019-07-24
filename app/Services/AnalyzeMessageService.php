@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Task;
+use Google\Cloud\Translate\TranslateClient;
 
 class AnalyzeMessageService
 {
@@ -34,6 +35,11 @@ class AnalyzeMessageService
         }
 
         $result = $this->fetch($events['message']["text"], $send_to);
+        if ($result) {
+            return $result;
+        }
+
+        $result = $this->translate($events['message']["text"]);
         if ($result) {
             return $result;
         }
@@ -128,6 +134,24 @@ class AnalyzeMessageService
         ];
     }
 
+    private function translate($push_text)
+    {
+        if (!preg_match('/^翻訳 (.*)/u',$push_text, $matches)) {
+            return [];
+        }
+
+        $translate = new TranslateClient(['key' => env("GOOGLE_TRANSLATION_API_KEY")]);
+        $result = $translate->translate(
+            $matches[1],
+            ['target' => 'en']
+        );
+
+        return [
+            'type' => 'text',
+            'text' => $result['text'],
+        ];
+    }
+
     /**
      * @param $push_text
      * @param $send_to
@@ -175,8 +199,7 @@ class AnalyzeMessageService
 
 
     /**
-     * @param $push_text
-     * @param $send_to
+     * @param $postback
      * @return array
      */
     private function regist_postback($postback)
