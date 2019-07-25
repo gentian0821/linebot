@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Task;
 use App\Translate;
 use Google\Cloud\Translate\TranslateClient;
+use Illuminate\Support\Facades\Config;
 
 class AnalyzeMessageService
 {
@@ -159,7 +160,7 @@ class AnalyzeMessageService
             $translate_lang = 'ja';
         }
 
-        $translate_client = new TranslateClient(['key' => env("GOOGLE_TRANSLATION_API_KEY")]);
+        $translate_client = new TranslateClient(['key' => Config::get('const.translation_api_key')]);
         $result = $translate_client->translate(
             $matches[1],
             ['target' => $translate_lang]

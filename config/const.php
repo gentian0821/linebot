@@ -8,4 +8,6 @@ return [
     'line_reply_api' => '/v2/bot/message/reply',
 
     'line_push_api' => '/v2/bot/message/push',
+
+    'translation_api_key' => env("GOOGLE_TRANSLATION_API_KEY"),
 ];
