@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Task;
+use App\Translate;
 use Google\Cloud\Translate\TranslateClient;
 
 class AnalyzeMessageService
@@ -140,11 +141,17 @@ class AnalyzeMessageService
             return [];
         }
 
-        $translate = new TranslateClient(['key' => env("GOOGLE_TRANSLATION_API_KEY")]);
-        $result = $translate->translate(
+        $translate_client = new TranslateClient(['key' => env("GOOGLE_TRANSLATION_API_KEY")]);
+        $result = $translate_client->translate(
             $matches[1],
             ['target' => 'en']
         );
+
+        $translate = new Translate;
+        $translate->text_size = mb_strlen($matches[1]);
+        $translate->source_text = $matches[1];
+        $translate->translate_text = $result['text'];
+        $translate->save();
 
         return [
             'type' => 'text',
