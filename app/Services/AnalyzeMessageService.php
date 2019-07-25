@@ -141,10 +141,28 @@ class AnalyzeMessageService
             return [];
         }
 
+        $source_text = $matches[1];
+        $ascii_count = 0;
+        $multibyte_count = 0;
+        $length = mb_strlen($source_text, 'UTF-8');
+        for ($i = 0; $i < $length; $i += 1) {
+            $char = mb_substr($source_text, $i, 1, 'UTF-8');
+            if (mb_check_encoding($char, 'ASCII')) {
+                $ascii_count++;
+                continue;
+            }
+            $multibyte_count++;
+        }
+
+        $translate_lang = 'en';
+        if ($ascii_count > $multibyte_count) {
+            $translate_lang = 'ja';
+        }
+
         $translate_client = new TranslateClient(['key' => env("GOOGLE_TRANSLATION_API_KEY")]);
         $result = $translate_client->translate(
             $matches[1],
-            ['target' => 'en']
+            ['target' => $translate_lang]
         );
 
         $translate = new Translate;
