@@ -306,7 +306,7 @@ class AnalyzeMessageService
 
         return [
             'type' => 'text',
-            'text' => $res['text']
+            'text' => $res['responses']['fullTextAnnotation']['text']
         ];
     }
 }
