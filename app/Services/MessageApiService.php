@@ -55,4 +55,20 @@ class MessageApiService
 
         return $this->client->request('POST', Config::get('const.line_push_api'), $options);
     }
+
+    /**
+     * @param $messages
+     * @param $send_to
+     * @return mixed|\Psr\Http\Message\ResponseInterface
+     */
+    public function contents($message_id)
+    {
+        unset($this->headers['Content-Type']);
+
+        $options = [
+            'headers' => $this->headers,
+        ];
+
+        return $this->client->request('POST', printf(Config::get('const.line_content_api'), $message_id), $options);
+    }
 }

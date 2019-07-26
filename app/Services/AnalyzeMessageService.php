@@ -6,6 +6,7 @@ use App\Task;
 use App\Translate;
 use Google\Cloud\Translate\TranslateClient;
 use Illuminate\Support\Facades\Config;
+use Google\Cloud\Vision\VisionClient;
 
 class AnalyzeMessageService
 {
@@ -15,6 +16,10 @@ class AnalyzeMessageService
      */
     public function reply_message($events)
     {
+        if (isset($events['message']['type']) && $events['message']['type'] === 'image') {
+            return $this->image($events['message']);
+        }
+
         if (isset($events['postback'])) {
             return $this->regist_postback($events['postback']);
         }
@@ -250,6 +255,29 @@ class AnalyzeMessageService
         return [
             'type' => 'text',
             'text' => '登録したよー！'
+        ];
+    }
+
+    /**
+     * @param $push_text
+     * @param $send_to
+     * @return array
+     */
+    private function image($message)
+    {
+        $vision = new VisionClient();
+
+        $resource = file_get_contents($this->message_api->contents($message['id']));
+        $image = $vision->image($resource, ['TEXT_DETECTION']);
+        $annotation = $vision->annotate($image);
+
+        $txt = $annotation->fullText()->text();
+
+        var_dump($txt);
+
+        return [
+            'type' => 'text',
+            'text' => $txt
         ];
     }
 }
