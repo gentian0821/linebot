@@ -68,7 +68,7 @@ class MessageApiService
         $options = [
             'headers' => $this->headers,
         ];
-
-        return $this->client->request('POST', printf(Config::get('const.line_content_api'), $message_id), $options);
+var_dump(printf(Config::get('const.line_content_api'), $message_id));
+        return $this->client->request('GET', printf(Config::get('const.line_content_api'), $message_id), $options);
     }
 }
