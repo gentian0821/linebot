@@ -304,10 +304,9 @@ class AnalyzeMessageService
 
         $response_string = json_decode($res, true);
 
-        Log::info($response_string);
         return [
             'type' => 'text',
-            'text' => $response_string['responses']['textAnnotations']['description']
+            'text' => $response_string['responses'][0]['textAnnotations'][0]['description']
         ];
     }
 }
