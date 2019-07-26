@@ -265,20 +265,45 @@ class AnalyzeMessageService
      */
     private function image($message)
     {
-        $vision = new VisionClient();
-
         $message_api = new MessageApiService();
-        $resource = file_get_contents($message_api->contents($message['id']));
-        $image = $vision->image($resource, ['TEXT_DETECTION']);
-        $annotation = $vision->annotate($image);
+        $json = json_encode([
+            "requests" => [
+                [
+                    "image" => [
+                        "content" => base64_encode(file_get_contents($message_api->contents($message['id'])))
+                    ],
+                   "features" => [
+                        [
+                            "type" => "TEXT_DETECTION" ,
+                            "maxResults" => 3 ,
+                        ] ,
+                    ],
+                ],
+            ],
+        ]);
 
-        $txt = $annotation->fullText()->text();
+        $curl = curl_init() ;
+        curl_setopt( $curl, CURLOPT_URL, "https://vision.googleapis.com/v1/images:annotate?key=" . Config::get('const.cloud_vision_api_key') ) ;
+        curl_setopt( $curl, CURLOPT_HEADER, true ) ;
+        curl_setopt( $curl, CURLOPT_CUSTOMREQUEST, "POST" ) ;
+        curl_setopt( $curl, CURLOPT_HTTPHEADER, array( "Content-Type: application/json" ) ) ;
+        curl_setopt( $curl, CURLOPT_SSL_VERIFYPEER, false ) ;
+        curl_setopt( $curl, CURLOPT_RETURNTRANSFER, true ) ;
+        curl_setopt( $curl, CURLOPT_TIMEOUT, 15 ) ;
+        curl_setopt( $curl, CURLOPT_POSTFIELDS, $json ) ;
+        $res1 = curl_exec( $curl ) ;
+        $res2 = curl_getinfo( $curl ) ;
+        curl_close( $curl ) ;
 
-        var_dump($txt);
+        // 取得したデータ
+        $res = substr( $res1, $res2["header_size"] ) ;				// 取得したJSON
+        $header = substr( $res1, 0, $res2["header_size"] ) ;		// レスポンスヘッダー
+
+        Log::info($res);
 
         return [
             'type' => 'text',
-            'text' => $txt
+            'text' => $res
         ];
     }
 }
