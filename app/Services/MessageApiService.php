@@ -4,6 +4,7 @@ namespace App\Services;
 
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Log;
 
 class MessageApiService
 {
@@ -68,7 +69,8 @@ class MessageApiService
         $options = [
             'headers' => $this->headers,
         ];
-var_dump(printf(Config::get('const.line_content_api'), $message_id));
+        Log::info(printf(Config::get('const.line_content_api'), $message_id));
+
         return $this->client->request('GET', printf(Config::get('const.line_content_api'), $message_id), $options);
     }
 }
