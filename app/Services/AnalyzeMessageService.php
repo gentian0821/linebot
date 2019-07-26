@@ -302,11 +302,12 @@ class AnalyzeMessageService
         $res = substr( $res1, $res2["header_size"] ) ;				// 取得したJSON
         $header = substr( $res1, 0, $res2["header_size"] ) ;		// レスポンスヘッダー
 
-        Log::info($res['responses']['fullTextAnnotation']);
+        $response_string = json_decode($res);
 
+        Log::info($response_string);
         return [
             'type' => 'text',
-            'text' => $res['responses']['fullTextAnnotation']['text']
+            'text' => $response_string['responses']['textAnnotations']['description']
         ];
     }
 }
