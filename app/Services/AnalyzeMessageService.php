@@ -267,7 +267,8 @@ class AnalyzeMessageService
     {
         $vision = new VisionClient();
 
-        $resource = file_get_contents($this->message_api->contents($message['id']));
+        $message_api = new MessageApiService();
+        $resource = file_get_contents($message_api->contents($message['id']));
         $image = $vision->image($resource, ['TEXT_DETECTION']);
         $annotation = $vision->annotate($image);
 
