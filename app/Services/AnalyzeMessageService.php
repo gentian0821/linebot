@@ -7,6 +7,7 @@ use App\Translate;
 use Google\Cloud\Translate\TranslateClient;
 use Illuminate\Support\Facades\Config;
 use Google\Cloud\Vision\VisionClient;
+use Illuminate\Support\Facades\Log;
 
 class AnalyzeMessageService
 {
