@@ -266,11 +266,13 @@ class AnalyzeMessageService
     private function image($message)
     {
         $message_api = new MessageApiService();
+        $response = $message_api->contents($message['id']);
+
         $json = json_encode([
             "requests" => [
                 [
                     "image" => [
-                        "content" => base64_encode(file_get_contents($message_api->contents($message['id'])))
+                        "content" => base64_encode($response->getBody())
                     ],
                    "features" => [
                         [
