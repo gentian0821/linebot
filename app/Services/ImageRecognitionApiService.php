@@ -59,18 +59,19 @@ class ImageRecognitionApiService
         $res2 = curl_getinfo( $curl ) ;
         curl_close( $curl ) ;
 
-        // 取得したデータ
-        return substr( $res1, $res2["header_size"] ) ;				// 取得したJSON
+        return json_decode(substr( $res1, $res2["header_size"] ), true);
 
 //        $options = [
 //            'json' => $request_json,
 //            'headers' => $this->headers,
 //        ];
 //Log::info(Config::get('const.cloud_vision_annotate_api') . '?key=' . $this->api_key);
-//        return $this->client->request(
+//        $response = $this->client->request(
 //            'POST',
 //            Config::get('const.cloud_vision_annotate_api') . '?key=' . $this->api_key,
 //            $options
 //        );
+//
+//        return json_decode($rsponse->getBody(), true);
     }
 }
