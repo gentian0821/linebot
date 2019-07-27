@@ -59,7 +59,9 @@ class ImageRecognitionApiService
         $res2 = curl_getinfo( $curl ) ;
         curl_close( $curl ) ;
 
-        return json_decode(substr( $res1, $res2["header_size"] ), true);
+        $response = json_decode(substr( $res1, $res2["header_size"] ), true);
+        Log::info($response);
+        return $response;
 
 //        $options = [
 //            'json' => $request_json,
