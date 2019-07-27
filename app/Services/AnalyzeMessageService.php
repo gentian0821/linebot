@@ -269,40 +269,43 @@ class AnalyzeMessageService
         $message_api = new MessageApiService();
         $response = $message_api->contents($message['id']);
 
-        $json = json_encode([
-            "requests" => [
-                [
-                    "image" => [
-                        "content" => base64_encode($response->getBody())
-                    ],
-                   "features" => [
-                        [
-                            "type" => "TEXT_DETECTION" ,
-                            "maxResults" => 3 ,
-                        ] ,
-                    ],
-                ],
-            ],
-        ]);
+//        $json = json_encode([
+//            "requests" => [
+//                [
+//                    "image" => [
+//                        "content" => base64_encode($response->getBody())
+//                    ],
+//                   "features" => [
+//                        [
+//                            "type" => "TEXT_DETECTION" ,
+//                            "maxResults" => 3 ,
+//                        ] ,
+//                    ],
+//                ],
+//            ],
+//        ]);
+//
+//        $curl = curl_init() ;
+//        curl_setopt( $curl, CURLOPT_URL, "https://vision.googleapis.com/v1/images:annotate?key=" . Config::get('const.cloud_vision_api_key') ) ;
+//        curl_setopt( $curl, CURLOPT_HEADER, true ) ;
+//        curl_setopt( $curl, CURLOPT_CUSTOMREQUEST, "POST" ) ;
+//        curl_setopt( $curl, CURLOPT_HTTPHEADER, array( "Content-Type: application/json" ) ) ;
+//        curl_setopt( $curl, CURLOPT_SSL_VERIFYPEER, false ) ;
+//        curl_setopt( $curl, CURLOPT_RETURNTRANSFER, true ) ;
+//        curl_setopt( $curl, CURLOPT_TIMEOUT, 15 ) ;
+//        curl_setopt( $curl, CURLOPT_POSTFIELDS, $json ) ;
+//        $res1 = curl_exec( $curl ) ;
+//        $res2 = curl_getinfo( $curl ) ;
+//        curl_close( $curl ) ;
 
-        $curl = curl_init() ;
-        curl_setopt( $curl, CURLOPT_URL, "https://vision.googleapis.com/v1/images:annotate?key=" . Config::get('const.cloud_vision_api_key') ) ;
-        curl_setopt( $curl, CURLOPT_HEADER, true ) ;
-        curl_setopt( $curl, CURLOPT_CUSTOMREQUEST, "POST" ) ;
-        curl_setopt( $curl, CURLOPT_HTTPHEADER, array( "Content-Type: application/json" ) ) ;
-        curl_setopt( $curl, CURLOPT_SSL_VERIFYPEER, false ) ;
-        curl_setopt( $curl, CURLOPT_RETURNTRANSFER, true ) ;
-        curl_setopt( $curl, CURLOPT_TIMEOUT, 15 ) ;
-        curl_setopt( $curl, CURLOPT_POSTFIELDS, $json ) ;
-        $res1 = curl_exec( $curl ) ;
-        $res2 = curl_getinfo( $curl ) ;
-        curl_close( $curl ) ;
+        $vision_api = new ImageRecognitionApiService();
 
+        $rsponse = $vision_api->annotate(base64_encode($response->getBody()));
         // 取得したデータ
-        $res = substr( $res1, $res2["header_size"] ) ;				// 取得したJSON
-        $header = substr( $res1, 0, $res2["header_size"] ) ;		// レスポンスヘッダー
+//        $res = substr( $rsponse->getBody(), $res2["header_size"] ) ;				// 取得したJSON
+//        $header = substr( $res1, 0, $res2["header_size"] ) ;		// レスポンスヘッダー
 
-        $response_string = json_decode($res, true);
+        $response_string = json_decode($rsponse->getBody(), true);
 
         return [
             'type' => 'text',

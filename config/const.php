@@ -11,7 +11,11 @@ return [
 
     'line_content_api' => '/v2/bot/message/%s/content',
 
-    'translation_api_key' => env("GOOGLE_TRANSLATION_API_KEY"),
+    'cloud_vision_base_url' => 'https://vision.googleapis.com',
+
+    'const.cloud_vision_annotate_api' => '/v1/images:annotate',
 
     'cloud_vision_api_key' => env("GOOGLE_CLOUD_VISION_API_KEY"),
+
+    'translation_api_key' => env("GOOGLE_TRANSLATION_API_KEY"),
 ];
