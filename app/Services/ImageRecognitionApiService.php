@@ -46,15 +46,31 @@ class ImageRecognitionApiService
             ],
         ];
 
-        $options = [
-            'json' => $request_json,
-            'headers' => $this->headers,
-        ];
-Log::info(Config::get('const.cloud_vision_annotate_api') . '?key=' . $this->api_key);
-        return $this->client->request(
-            'POST',
-            Config::get('const.cloud_vision_annotate_api') . '?key=' . $this->api_key,
-            $options
-        );
+        $curl = curl_init() ;
+        curl_setopt( $curl, CURLOPT_URL, "https://vision.googleapis.com/v1/images:annotate?key=" . Config::get('const.cloud_vision_api_key') ) ;
+        curl_setopt( $curl, CURLOPT_HEADER, true ) ;
+        curl_setopt( $curl, CURLOPT_CUSTOMREQUEST, "POST" ) ;
+        curl_setopt( $curl, CURLOPT_HTTPHEADER, array( "Content-Type: application/json" ) ) ;
+        curl_setopt( $curl, CURLOPT_SSL_VERIFYPEER, false ) ;
+        curl_setopt( $curl, CURLOPT_RETURNTRANSFER, true ) ;
+        curl_setopt( $curl, CURLOPT_TIMEOUT, 15 ) ;
+        curl_setopt( $curl, CURLOPT_POSTFIELDS, $request_json ) ;
+        $res1 = curl_exec( $curl ) ;
+        $res2 = curl_getinfo( $curl ) ;
+        curl_close( $curl ) ;
+
+        // 取得したデータ
+        return substr( $res1, $res2["header_size"] ) ;				// 取得したJSON
+
+//        $options = [
+//            'json' => $request_json,
+//            'headers' => $this->headers,
+//        ];
+//Log::info(Config::get('const.cloud_vision_annotate_api') . '?key=' . $this->api_key);
+//        return $this->client->request(
+//            'POST',
+//            Config::get('const.cloud_vision_annotate_api') . '?key=' . $this->api_key,
+//            $options
+//        );
     }
 }
