@@ -49,7 +49,7 @@ class ImageRecognitionApiService
             'json' => $request_json,
             'headers' => $this->headers,
         ];
-
+Log::info(Config::get('const.cloud_vision_annotate_api') . '?key=' . $this->api_key);
         return $this->client->request(
             'POST',
             Config::get('const.cloud_vision_annotate_api') . '?key=' . $this->api_key,
