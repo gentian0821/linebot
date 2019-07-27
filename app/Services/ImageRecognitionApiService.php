@@ -54,7 +54,7 @@ class ImageRecognitionApiService
         curl_setopt( $curl, CURLOPT_SSL_VERIFYPEER, false ) ;
         curl_setopt( $curl, CURLOPT_RETURNTRANSFER, true ) ;
         curl_setopt( $curl, CURLOPT_TIMEOUT, 15 ) ;
-        curl_setopt( $curl, CURLOPT_POSTFIELDS, $request_json ) ;
+        curl_setopt( $curl, CURLOPT_POSTFIELDS, json_encode($request_json) ) ;
         $res1 = curl_exec( $curl ) ;
         $res2 = curl_getinfo( $curl ) ;
         curl_close( $curl ) ;
