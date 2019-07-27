@@ -13,7 +13,7 @@ return [
 
     'cloud_vision_base_url' => 'https://vision.googleapis.com',
 
-    'const.cloud_vision_annotate_api' => '/v1/images:annotate',
+    'cloud_vision_annotate_api' => '/v1/images:annotate',
 
     'cloud_vision_api_key' => env("GOOGLE_CLOUD_VISION_API_KEY"),
 
