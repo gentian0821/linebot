@@ -270,7 +270,7 @@ class AnalyzeMessageService
         $response = $message_api->contents($message['id']);
 
         $vision_api = new ImageRecognitionApiService();
-        $vision_response = $vision_api->annotate(base64_encode($response->getBody()));
+        $vision_response = $vision_api->annotate($response->getBody());
 
         return [
             'type' => 'text',
