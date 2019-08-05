@@ -41,8 +41,10 @@ class ScheduleController extends Controller
         Log::info($result);
 
         $message = [
-            'type' => 'text',
-            'text' => $result,
+            [
+                'type' => 'text',
+                'text' => $result,
+            ]
         ];
 
         $this->message_api->push($message, Config::get('const.calendar_send_to'));
