@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Services\MessageApiService;
 use App\Task;
-use Illuminate\Support\Facades\Log;
 
 class PushController extends Controller
 {
@@ -14,6 +13,7 @@ class PushController extends Controller
     {
         $this->message_api = $message_api;
     }
+
     /**
      * Display a listing of the resource.
      *

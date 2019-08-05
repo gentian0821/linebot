@@ -20,3 +20,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::resource('callback', 'CallbackController');
 
 Route::resource('push', 'PushController');
+
+Route::resource('schedule', 'ScheduleController');
