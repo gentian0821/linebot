@@ -35,11 +35,11 @@ class ScheduleController extends Controller
 
         $result = '今日の予定だよー！';
         foreach ($events as $event) {
-            $result .= '\n' . $event->getSummary();
+            $result .= "\n" . str_replace('\n', '', $event->getSummary());
         }
 
         Log::info($result);
-
+        Log::info($event->getSummary());
         $message = [
             [
                 'type' => 'text',
