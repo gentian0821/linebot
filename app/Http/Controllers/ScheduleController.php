@@ -35,7 +35,7 @@ class ScheduleController extends Controller
 
         $result = '今日の予定だよー！';
         foreach ($events as $event) {
-            $result .= "\n" . $event->getSummary();
+            $result .= "\n- " . $event->getSummary();
         }
 
         Log::info($result);
