@@ -15,11 +15,9 @@ return [
 
     'cloud_vision_annotate_api' => '/v1/images:annotate',
 
-    'cloud_vision_api_key' => env("GOOGLE_CLOUD_VISION_API_KEY"),
+    'google_api_key' => env("GOOGLE_API_KEY"),
 
-    'translation_api_key' => env("GOOGLE_TRANSLATION_API_KEY"),
-
-    'calendar_api_credential' => env("GOOGLE_CALENDAR_API_CREDENTIAL"),
+    'google_api_credential' => env("GOOGLE_API_CREDENTIAL"),
 
     'calendar_id' => env("GOOGLE_CALENDAR_ID"),
 

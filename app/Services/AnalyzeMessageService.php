@@ -166,7 +166,7 @@ class AnalyzeMessageService
             $translate_lang = 'ja';
         }
 
-        $translate_client = new TranslateClient(['key' => Config::get('const.translation_api_key')]);
+        $translate_client = new TranslateClient(['key' => Config::get('const.google_api_key')]);
         $result = $translate_client->translate(
             $matches[1],
             ['target' => $translate_lang]

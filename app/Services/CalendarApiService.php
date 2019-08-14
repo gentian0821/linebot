@@ -14,7 +14,7 @@ class CalendarApiService
 
     public function __construct()
     {
-        $json = json_decode(Config::get('const.calendar_api_credential'), true);
+        $json = json_decode(Config::get('const.google_api_credential'), true);
         $this->client = new Google_Client();
         $this->client->setApplicationName('calendar');
         $this->client->setAuthConfig($json);

@@ -47,7 +47,7 @@ class ImageRecognitionApiService
         ];
 
         $curl = curl_init() ;
-        curl_setopt( $curl, CURLOPT_URL, "https://vision.googleapis.com/v1/images:annotate?key=" . Config::get('const.cloud_vision_api_key') ) ;
+        curl_setopt( $curl, CURLOPT_URL, "https://vision.googleapis.com/v1/images:annotate?key=" . Config::get('const.google_api_key') ) ;
         curl_setopt( $curl, CURLOPT_HEADER, true ) ;
         curl_setopt( $curl, CURLOPT_CUSTOMREQUEST, "POST" ) ;
         curl_setopt( $curl, CURLOPT_HTTPHEADER, array( "Content-Type: application/json" ) ) ;
