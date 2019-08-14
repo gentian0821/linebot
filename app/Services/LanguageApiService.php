@@ -36,7 +36,6 @@ class LanguageApiService
         $response = $this->client->analyzeSentiment($document);
         $document_sentiment = $response->getDocumentSentiment();
 
-        Log::info($document_sentiment);
         return $document_sentiment;
     }
 }
