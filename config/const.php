@@ -19,6 +19,8 @@ return [
 
     'google_api_credential' => env("GOOGLE_API_CREDENTIAL"),
 
+    'google_application_credential' => env('GOOGLE_APPLICATION_CREDENTIALS'),
+
     'calendar_id' => env("GOOGLE_CALENDAR_ID"),
 
     'calendar_send_to' => env("GOOGLE_CALENDAR_SEND_TO"),

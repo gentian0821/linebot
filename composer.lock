@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7c99dfe9d66538937ca748cc738a462b",
+    "content-hash": "21bbbdf725cb94b419c94b9f68de003b",
     "packages": [
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -572,16 +572,16 @@
         },
         {
             "name": "google/cloud-core",
-            "version": "v1.29.0",
+            "version": "v1.31.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/googleapis/google-cloud-php-core.git",
-                "reference": "a7b3a821be80a86a111b7a271886faf3226a277d"
+                "reference": "c7b8890cdab3761e341ecf8f5d7c141aa616978f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/googleapis/google-cloud-php-core/zipball/a7b3a821be80a86a111b7a271886faf3226a277d",
-                "reference": "a7b3a821be80a86a111b7a271886faf3226a277d",
+                "url": "https://api.github.com/repos/googleapis/google-cloud-php-core/zipball/c7b8890cdab3761e341ecf8f5d7c141aa616978f",
+                "reference": "c7b8890cdab3761e341ecf8f5d7c141aa616978f",
                 "shasum": ""
             },
             "require": {
@@ -597,7 +597,7 @@
             "require-dev": {
                 "erusev/parsedown": "^1.6",
                 "google/common-protos": "^1.0",
-                "google/gax": "^1.0",
+                "google/gax": "^1.1",
                 "opis/closure": "^3",
                 "phpdocumentor/reflection": "^3.0",
                 "phpunit/phpunit": "^4.8|^5.0",
@@ -629,7 +629,59 @@
                 "Apache-2.0"
             ],
             "description": "Google Cloud PHP shared dependency, providing functionality useful to all components.",
-            "time": "2019-06-27T20:27:31+00:00"
+            "time": "2019-08-07T20:57:43+00:00"
+        },
+        {
+            "name": "google/cloud-language",
+            "version": "v0.20.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/googleapis/google-cloud-php-language.git",
+                "reference": "70ed1d9cb8fc4cf1aa1d2af8d8d59da1722dfc32"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/googleapis/google-cloud-php-language/zipball/70ed1d9cb8fc4cf1aa1d2af8d8d59da1722dfc32",
+                "reference": "70ed1d9cb8fc4cf1aa1d2af8d8d59da1722dfc32",
+                "shasum": ""
+            },
+            "require": {
+                "google/cloud-core": "^1.31",
+                "google/gax": "^1.1"
+            },
+            "require-dev": {
+                "erusev/parsedown": "^1.6",
+                "google/cloud-storage": "^1.3",
+                "phpdocumentor/reflection": "^3.0",
+                "phpunit/phpunit": "^4.8|^5.0",
+                "squizlabs/php_codesniffer": "2.*"
+            },
+            "suggest": {
+                "ext-grpc": "The gRPC extension enables use of the performant gRPC transport",
+                "ext-protobuf": "Provides a significant increase in throughput over the pure PHP protobuf implementation. See https://cloud.google.com/php/grpc for installation instructions.",
+                "google/cloud-storage": "Analyze documents stored in Google Cloud Storage"
+            },
+            "type": "library",
+            "extra": {
+                "component": {
+                    "id": "cloud-language",
+                    "target": "googleapis/google-cloud-php-language.git",
+                    "path": "Language",
+                    "entry": "src/LanguageClient.php"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Google\\Cloud\\Language\\": "src",
+                    "GPBMetadata\\Google\\Cloud\\Language\\": "metadata"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "description": "Cloud Natural Language Client for PHP",
+            "time": "2019-08-07T20:57:43+00:00"
         },
         {
             "name": "google/cloud-translate",
@@ -768,16 +820,16 @@
         },
         {
             "name": "google/gax",
-            "version": "1.0.3",
+            "version": "1.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/googleapis/gax-php.git",
-                "reference": "0877185cbf4bc7648685a25f466fec8e531d0370"
+                "reference": "231495b0f31af35813322fcb4015d21e9d4fb7f8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/googleapis/gax-php/zipball/0877185cbf4bc7648685a25f466fec8e531d0370",
-                "reference": "0877185cbf4bc7648685a25f466fec8e531d0370",
+                "url": "https://api.github.com/repos/googleapis/gax-php/zipball/231495b0f31af35813322fcb4015d21e9d4fb7f8",
+                "reference": "231495b0f31af35813322fcb4015d21e9d4fb7f8",
                 "shasum": ""
             },
             "require": {
@@ -814,7 +866,7 @@
             "keywords": [
                 "google"
             ],
-            "time": "2019-06-25T18:06:46+00:00"
+            "time": "2019-08-07T17:43:51+00:00"
         },
         {
             "name": "google/grpc-gcp",

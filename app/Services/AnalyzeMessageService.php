@@ -52,6 +52,39 @@ class AnalyzeMessageService
             return $result;
         }
 
+        $lang_service = new LanguageApiService();
+
+        $result = $lang_service->sentiment($events['message']["text"]);
+        $score = $result->getScore();
+
+        if ($score > 0.5) {
+            return [
+                'type' => 'text',
+                'text' => 'やったね！'
+            ];
+        }
+
+        if ($score > 0.0) {
+            return [
+                'type' => 'text',
+                'text' => 'うんうん！'
+            ];
+        }
+
+        if ($score > -0.5) {
+            return [
+                'type' => 'text',
+                'text' => 'ざんねん！'
+            ];
+        }
+
+        if ($score > -1.0) {
+            return [
+                'type' => 'text',
+                'text' => 'えーーーん...'
+            ];
+        }
+
         $key = rand(1,4);
 
         $default_messages = [
