@@ -52,40 +52,11 @@ class AnalyzeMessageService
             return $result;
         }
 
-        $lang_service = new LanguageApiService();
+        $key = rand(1,5);
 
-        $result = $lang_service->sentiment($events['message']["text"]);
-        $score = $result->getScore();
-
-        if ($score > 0.5) {
-            return [
-                'type' => 'text',
-                'text' => 'やったね！'
-            ];
+        if ($key == 5) {
+            return $this->emotion($events['message']["text"]);
         }
-
-        if ($score > 0.0) {
-            return [
-                'type' => 'text',
-                'text' => 'うんうん！'
-            ];
-        }
-
-        if ($score > -0.5) {
-            return [
-                'type' => 'text',
-                'text' => 'ざんねん！'
-            ];
-        }
-
-        if ($score > -1.0) {
-            return [
-                'type' => 'text',
-                'text' => 'えーーーん...'
-            ];
-        }
-
-        $key = rand(1,4);
 
         $default_messages = [
             1 => [
@@ -309,5 +280,41 @@ class AnalyzeMessageService
             'type' => 'text',
             'text' => $vision_response['responses'][0]['textAnnotations'][0]['description']
         ];
+    }
+
+    private function emotion($text)
+    {
+        $lang_service = new LanguageApiService();
+
+        $result = $lang_service->sentiment($text);
+        $score = $result->getScore();
+
+        if ($score > 0.5) {
+            return [
+                'type' => 'text',
+                'text' => 'やったね！'
+            ];
+        }
+
+        if ($score > 0.0) {
+            return [
+                'type' => 'text',
+                'text' => 'うんうん！'
+            ];
+        }
+
+        if ($score > -0.5) {
+            return [
+                'type' => 'text',
+                'text' => 'ざんねん！' . '\uDBC0\uDC84'
+            ];
+        }
+
+        if ($score > -1.0) {
+            return [
+                'type' => 'text',
+                'text' => 'えーーーん...'
+            ];
+        }
     }
 }
