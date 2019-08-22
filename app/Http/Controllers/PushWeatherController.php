@@ -39,11 +39,11 @@ class PushWeatherController extends Controller
                 'type' => 'text',
                 'text' => $weather_info['title'],
             ],
-            [
-                'type' => 'image',
-                'originalContentUrl' => $weather_info['forecasts'][0]['image']['url'],
-                'previewImageUrl'    => $weather_info['forecasts'][0]['image']['url']
-            ],
+//            [
+//                'type' => 'image',
+//                'originalContentUrl' => $weather_info['forecasts'][0]['image']['url'],
+//                'previewImageUrl'    => $weather_info['forecasts'][0]['image']['url']
+//            ],
             [
                 'type' => 'text',
                 'text' => $weather_info['forecasts'][0]['telop'],
