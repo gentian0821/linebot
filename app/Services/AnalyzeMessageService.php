@@ -54,7 +54,7 @@ class AnalyzeMessageService
 
         $key = rand(1,5);
 
-        if ($key == 5) {
+        if ($key == 3) {
             return $this->emotion($events['message']["text"]);
         }
 
@@ -67,16 +67,16 @@ class AnalyzeMessageService
                 'type' => 'text',
                 'text' => $events['message']["text"]
             ],
-            3 => [
-                'type' => 'image',
-                'originalContentUrl' => 'https://linebot-fayc4.herokuapp.com/img/kakkun2.jpg',
-                'previewImageUrl'    => 'https://linebot-fayc4.herokuapp.com/img/kakkun2_thum.jpg'
-            ],
-            4 => [
-                'type' => 'image',
-                'originalContentUrl' => 'https://linebot-fayc4.herokuapp.com/img/yuika2.jpg',
-                'previewImageUrl'    => 'https://linebot-fayc4.herokuapp.com/img/yuika2_thum.jpg'
-            ]
+//            3 => [
+//                'type' => 'image',
+//                'originalContentUrl' => 'https://linebot-fayc4.herokuapp.com/img/kakkun2.jpg',
+//                'previewImageUrl'    => 'https://linebot-fayc4.herokuapp.com/img/kakkun2_thum.jpg'
+//            ],
+//           4 => [
+//                'type' => 'image',
+//                'originalContentUrl' => 'https://linebot-fayc4.herokuapp.com/img/yuika2.jpg',
+//                'previewImageUrl'    => 'https://linebot-fayc4.herokuapp.com/img/yuika2_thum.jpg'
+//           ]
         ];
 
         return $default_messages[$key];
