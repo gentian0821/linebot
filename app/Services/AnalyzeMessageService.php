@@ -52,7 +52,7 @@ class AnalyzeMessageService
             return $result;
         }
 
-        $key = rand(1,5);
+        $key = rand(1,3);
 
         if ($key == 3) {
             return $this->emotion($events['message']["text"]);
