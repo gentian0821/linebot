@@ -290,16 +290,9 @@ class AnalyzeMessageService
         $score = $result->getScore();
         
         if ($score > 0.5) {
-// 0xを抜いた数字の部分
-$code = '100078';
-// 16進エンコードされたバイナリ文字列をデコード
-$bin = hex2bin(str_repeat('0', 8 - strlen($code)) . $code);
-// UTF8へエンコード
-$emoticon =  mb_convert_encoding($bin, 'UTF-8', 'UTF-32BE');
             return [
                 'type' => 'text',
-                'text' => 'やったね！' . $emoticon
-//////////////////                'text' =>  $emoticon
+                'text' => 'やったね！'
             ];
         }
 
