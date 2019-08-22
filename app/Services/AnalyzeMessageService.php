@@ -291,9 +291,15 @@ class AnalyzeMessageService
         
         if ($score > 0.5) {
             $butterfly = mb_convert_encoding( hex2bin("0001F98B"), "UTF-8", "UTF-32");
+// 0xを抜いた数字の部分
+$code = '100078';
+// 16進エンコードされたバイナリ文字列をデコード
+$bin = hex2bin(str_repeat('0', 8 - strlen($code)) . $code);
+// UTF8へエンコード
+$emoticon =  mb_convert_encoding($bin, 'UTF-8', 'UTF-32BE');
             return [
                 'type' => 'text',
-                'text' => 'やったね！' . $butterfly
+                'text' => 'やったね！' . $emoticon
             ];
         }
 
