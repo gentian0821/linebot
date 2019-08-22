@@ -30,6 +30,8 @@ class WeatherApiService
             'headers' => $this->headers,
         ];
 
-        return json_decode($this->client->request('GET', '/forecast/webservice/json/v1?city=130010', $options), true);
+        $response = $this->client->request('GET', '/forecast/webservice/json/v1?city=130010', $options);
+
+        return json_decode($response->getBody(), true);
     }
 }
