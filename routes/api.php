@@ -22,3 +22,5 @@ Route::resource('callback', 'CallbackController');
 Route::resource('push', 'PushController');
 
 Route::resource('schedule', 'ScheduleController');
+
+Route::resource('weather', 'PushWeatherController');
