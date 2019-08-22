@@ -290,7 +290,6 @@ class AnalyzeMessageService
         $score = $result->getScore();
         
         if ($score > 0.5) {
-            $butterfly = mb_convert_encoding( hex2bin("0001F98B"), "UTF-8", "UTF-32");
 // 0xを抜いた数字の部分
 $code = '100078';
 // 16進エンコードされたバイナリ文字列をデコード
