@@ -52,9 +52,9 @@ class AnalyzeMessageService
             return [$result];
         }
 
-        $key = rand(1,3);
+        $key = rand(1,10);
 
-        if ($key == 3) {
+        if ($key >= 3) {
             return [$this->emotion($events['message']["text"])];
         }
 
@@ -298,28 +298,28 @@ class AnalyzeMessageService
         if ($score > 0.5) {
             return [
                 'type' => 'text',
-                'text' => 'やったね！' . $this->picture_letter("10078")
+                'text' => 'やったね！' . $this->picture_letter('1F604')
             ];
         }
 
         if ($score > 0.0) {
             return [
                 'type' => 'text',
-                'text' => 'うんうん！'
+                'text' => 'うんうん！' . $this->picture_letter('1F642')
             ];
         }
 
         if ($score > -0.5) {
             return [
                 'type' => 'text',
-                'text' => 'ざんねん！'
+                'text' => 'ざんねん！' . $this->picture_letter('1F635')
             ];
         }
 
         if ($score > -1.0) {
             return [
                 'type' => 'text',
-                'text' => 'えーーーん...'
+                'text' => 'えーーーん...' . $this->picture_letter('1F62D')
             ];
         }
     }
