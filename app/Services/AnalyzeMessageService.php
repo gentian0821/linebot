@@ -60,8 +60,14 @@ class AnalyzeMessageService
 
         $default_messages = [
             1 => [
-                'type' => 'text',
-                'text' => 'ふぁいしーふぉーだよー！'
+                [
+                    'type' => 'text',
+                    'text' => 'ふぁいしーふぉーだよー！'
+                ],
+                [
+                    'type' => 'text',
+                    'text' => $this->picture_letter("1F98B")
+                ]
             ],
             2 => [
                 'type' => 'text',
@@ -290,15 +296,9 @@ class AnalyzeMessageService
         $score = $result->getScore();
         
         if ($score > 0.5) {
-            // 0xを抜いた数字の部分
-            $code = '100078';
-            // 16進エンコードされたバイナリ文字列をデコード
-            $bin = hex2bin(str_repeat('0', 8 - strlen($code)) . $code);
-            // UTF8へエンコード
-            $emoticon =  mb_convert_encoding($bin, 'UTF-8', 'UTF-32BE');
             return [
                 'type' => 'text',
-                'text' => 'やったね！' . $emoticon
+                'text' => 'やったね！' . $this->picture_letter("10078")
             ];
         }
 
@@ -322,5 +322,13 @@ class AnalyzeMessageService
                 'text' => 'えーーーん...'
             ];
         }
+    }
+
+    private function picture_letter($code)
+    {
+        // 16進エンコードされたバイナリ文字列をデコード
+        $bin = hex2bin(str_repeat('0', 8 - strlen($code)) . $code);
+        // UTF8へエンコード
+        return mb_convert_encoding($bin, 'UTF-8', 'UTF-32BE');
     }
 }
