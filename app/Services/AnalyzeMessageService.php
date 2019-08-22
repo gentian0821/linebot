@@ -312,7 +312,7 @@ class AnalyzeMessageService
         if ($score > -0.5) {
             return [
                 'type' => 'text',
-                'text' => 'ざんねん！' . $this->picture_letter('1F635')
+                'text' => 'ざんねん！' . $this->picture_letter('1F62B')
             ];
         }
 
