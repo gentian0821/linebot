@@ -288,11 +288,12 @@ class AnalyzeMessageService
 
         $result = $lang_service->sentiment($text);
         $score = $result->getScore();
-
+        
         if ($score > 0.5) {
+            $butterfly = mb_convert_encoding( hex2bin("0001F98B"), "UTF-8", "UTF-32");
             return [
                 'type' => 'text',
-                'text' => 'やったね！' . "\xf0\x9f\xa6\x8b"
+                'text' => 'やったね！' . $butterfly
             ];
         }
 
