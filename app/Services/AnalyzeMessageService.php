@@ -292,7 +292,7 @@ class AnalyzeMessageService
         if ($score > 0.5) {
             return [
                 'type' => 'text',
-                'text' => 'やったね！'
+                'text' => 'やったね！' . "\xf0\x9f\xa6\x8b"
             ];
         }
 
@@ -306,7 +306,7 @@ class AnalyzeMessageService
         if ($score > -0.5) {
             return [
                 'type' => 'text',
-                'text' => 'ざんねん！' . "\uDBC0\uDC84"
+                'text' => 'ざんねん！'
             ];
         }
 
