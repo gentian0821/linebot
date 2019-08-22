@@ -41,7 +41,7 @@ class CallbackController extends Controller
 
         Log::info($param);
 
-        $messages[] = $this->analyze_message->reply_message($param['events'][0]);
+        $messages = $this->analyze_message->reply_message($param['events'][0]);
 
         $response = $this->message_api->reply($messages, $param["events"][0]['replyToken']);
 

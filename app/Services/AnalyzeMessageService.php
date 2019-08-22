@@ -18,44 +18,44 @@ class AnalyzeMessageService
     public function reply_message($events)
     {
         if (isset($events['message']['type']) && $events['message']['type'] === 'image') {
-            return $this->image($events['message']);
+            return [$this->image($events['message'])];
         }
 
         if (isset($events['postback'])) {
-            return $this->regist_postback($events['postback']);
+            return [$this->regist_postback($events['postback'])];
         }
 
         $send_to = $events['source']['groupId'] ?? $events['source']['roomId'] ?? $events['source']['userId'];
 
         $result = $this->regist_datetimepicker($events['message']["text"], $send_to);
         if ($result) {
-            return $result;
+            return [$result];
         }
 
         $result = $this->regist($events['message']["text"], $send_to);
         if ($result) {
-            return $result;
+            return [$result];
         }
 
         $result = $this->delete($events['message']["text"]);
         if ($result) {
-            return $result;
+            return [$result];
         }
 
         $result = $this->fetch($events['message']["text"], $send_to);
         if ($result) {
-            return $result;
+            return [$result];
         }
 
         $result = $this->translate($events['message']["text"]);
         if ($result) {
-            return $result;
+            return [$result];
         }
 
         $key = rand(1,3);
 
         if ($key == 3) {
-            return $this->emotion($events['message']["text"]);
+            return [$this->emotion($events['message']["text"])];
         }
 
         $default_messages = [
@@ -69,10 +69,10 @@ class AnalyzeMessageService
                     'text' => $this->picture_letter("1F98B")
                 ]
             ],
-            2 => [
+            2 => [[
                 'type' => 'text',
                 'text' => $events['message']["text"]
-            ],
+            ]],
 //            3 => [
 //                'type' => 'image',
 //                'originalContentUrl' => 'https://linebot-fayc4.herokuapp.com/img/kakkun2.jpg',
