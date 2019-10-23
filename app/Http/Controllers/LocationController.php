@@ -48,7 +48,7 @@ class LocationController extends Controller
         $message = [
             [
                 'type' => 'text',
-                'text' => "移動してるよー\nhttps://www.google.co.jp/maps/@{$param['latitude']},{$param['longitude']},15z?hl=ja",
+                'text' => "移動してるよー\nhttps://www.google.co.jp/maps?q={$param['latitude']},{$param['longitude']}",
             ]
         ];
 
