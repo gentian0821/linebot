@@ -24,3 +24,5 @@ Route::resource('push', 'PushController');
 Route::resource('schedule', 'ScheduleController');
 
 Route::resource('weather', 'PushWeatherController');
+
+Route::resource('location', 'LocationController');

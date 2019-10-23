@@ -24,4 +24,6 @@ return [
     'calendar_id' => env("GOOGLE_CALENDAR_ID"),
 
     'calendar_send_to' => env("GOOGLE_CALENDAR_SEND_TO"),
+
+    'test_send_to' => env("TEST_SEND_TO"),
 ];
