@@ -24,6 +24,31 @@ class LocationController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+    public function index(Request $request)
+    {
+        $param = $request->input();
+        $device = Device::where('identification_number', $param['identification'])->first();
+        $locations = Location::where('device_id', $device->device_id)->all();
+
+        $result = [];
+
+        foreach ($locations as $location) {
+            $result[] = [
+                'longitude' => $location->longitude,
+                'latitude' => $location->latitude,
+                'measured_at' => $location->measured_at,
+            ];
+        }
+
+        return response()->json($result);
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
     public function store(Request $request)
     {
         $param = $request->input();
@@ -43,6 +68,7 @@ class LocationController extends Controller
         $location->device_id = $device->id;
         $location->longitude = $param['longitude'];
         $location->latitude = $param['latitude'];
+        $location->measured_at = date('Y-m-d H:i:s');
         $location->save();
 
         $message = [
