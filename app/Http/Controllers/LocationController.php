@@ -29,7 +29,8 @@ class LocationController extends Controller
         $param = $request->input();
         $device = Device::where('identification_number', $param['identification'])->first();
         $locations = Location::where('device_id', $device->device_id)->get();
-
+        Log::info($device->device_id);
+        Log::info($locations);
         $result = [];
 
         foreach ($locations as $location) {
