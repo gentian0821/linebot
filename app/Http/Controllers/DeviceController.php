@@ -52,7 +52,7 @@ class DeviceController extends Controller
 
         Log::info($param);
 
-        if (!$param['identification']) {
+        if (!isset($param['identification']) || !$param['identification']) {
             $identification = hash_hmac('sha256', uniqid(), 'sensen_salt');
             $device = new Device;
             $device->identification_number = $identification;
