@@ -13,9 +13,9 @@ class ScheduleRepository implements ScheduleRepositoryInterface
 {
     /**
      * @param Google_Service_Calendar $service
-     * @return Google_Service_Calendar_Event
+     * @return array
      */
-    public function fetchEvents(Google_Service_Calendar $service): Google_Service_Calendar_Event
+    public function fetchEvents(Google_Service_Calendar $service): array
     {
         $params = array(
             'maxResults' => 10,
@@ -32,12 +32,12 @@ class ScheduleRepository implements ScheduleRepositoryInterface
 
     /**
      * @param MessageApiService $messageService
-     * @param Google_Service_Calendar_Event $event
+     * @param array $events
      */
-    public function send(MessageApiService $messageService, Google_Service_Calendar_Event $event): void
+    public function send(MessageApiService $messageService, array $events): void
     {
         $result = '今日の予定だよー！';
-        foreach ($event as $e) {
+        foreach ($events as $e) {
             if (!$e->getSummary()) {
                 continue;
             }
@@ -45,6 +45,6 @@ class ScheduleRepository implements ScheduleRepositoryInterface
             $result .= "\n・ " . $e->getSummary();
         }
 
-        $messageService->push($event, Config::get('const.calendar_send_to'));
+        $messageService->push($result, Config::get('const.calendar_send_to'));
     }
 }

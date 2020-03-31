@@ -16,8 +16,8 @@ interface ScheduleRepositoryInterface
 
     /**
      * @param MessageApiService $messageService
-     * @param Google_Service_Calendar_Event $event
-     * @return Google_Service_Calendar_Event
+     * @param array $events
+     * @return void
      */
-    public function send(MessageApiService $messageService, Google_Service_Calendar_Event $event);
+    public function send(MessageApiService $messageService, array $events);
 }
