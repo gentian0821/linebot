@@ -6,7 +6,6 @@ namespace packages\Infrastructure\Schedule;
 use packages\Domain\Domain\Schedule\ScheduleRepositoryInterface;
 use Google_Service_Calendar;
 use Illuminate\Support\Facades\Config;
-use Google_Service_Calendar_Event;
 use App\Services\MessageApiService;
 
 class ScheduleRepository implements ScheduleRepositoryInterface
@@ -34,7 +33,7 @@ class ScheduleRepository implements ScheduleRepositoryInterface
      * @param MessageApiService $messageService
      * @param array $events
      */
-    public function send(MessageApiService $messageService, array $events): void
+    public function sendMessage(MessageApiService $messageService, array $events): void
     {
         $result = '今日の予定だよー！';
         foreach ($events as $e) {
@@ -45,13 +44,6 @@ class ScheduleRepository implements ScheduleRepositoryInterface
             $result .= "\n・ " . $e->getSummary();
         }
 
-        $message = [
-            [
-                'type' => 'text',
-                'text' => $result,
-            ]
-        ];
-
-        $messageService->push($message, Config::get('const.calendar_send_to'));
+        $messageService->push([['type' => 'text', 'text' => $result]], Config::get('const.calendar_send_to'));
     }
 }

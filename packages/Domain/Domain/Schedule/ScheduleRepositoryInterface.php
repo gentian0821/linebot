@@ -3,14 +3,13 @@
 namespace packages\Domain\Domain\Schedule;
 
 use Google_Service_Calendar;
-use Google_Service_Calendar_Event;
 use App\Services\MessageApiService;
 
 interface ScheduleRepositoryInterface
 {
     /**
      * @param Google_Service_Calendar $service
-     * @return Google_Service_Calendar_Event
+     * @return array
      */
     public function fetchEvents(Google_Service_Calendar $service);
 
@@ -19,5 +18,5 @@ interface ScheduleRepositoryInterface
      * @param array $events
      * @return void
      */
-    public function send(MessageApiService $messageService, array $events);
+    public function sendMessage(MessageApiService $messageService, array $events);
 }

@@ -40,6 +40,6 @@ class ScheduleSendInteractor implements ScheduleSendUseCaseInterface
 
         $events = $this->scheduleRepository->fetchEvents(new Google_Service_Calendar($googleClient));
 
-        $this->scheduleRepository->send(new MessageApiService(), $events);
+        $this->scheduleRepository->sendMessage(new MessageApiService(), $events);
     }
 }
