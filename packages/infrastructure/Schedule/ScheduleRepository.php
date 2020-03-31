@@ -45,6 +45,13 @@ class ScheduleRepository implements ScheduleRepositoryInterface
             $result .= "\n・ " . $e->getSummary();
         }
 
-        $messageService->push($result, Config::get('const.calendar_send_to'));
+        $message = [
+            [
+                'type' => 'text',
+                'text' => $result,
+            ]
+        ];
+
+        $messageService->push($message, Config::get('const.calendar_send_to'));
     }
 }
