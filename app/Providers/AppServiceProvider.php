@@ -42,5 +42,15 @@ class AppServiceProvider extends ServiceProvider
             ScheduleSendPresenterInterface::class,
             ScheduleSendPresenter::class
         );
+
+        $this->app->singleton(
+            \packages\Domain\Domain\Message\TaskRepositoryInterface::class,
+            \packages\Infrastructure\Message\TaskRepository::class
+        );
+
+        $this->app->bind(
+            \packages\UseCase\Task\Send\TaskSendUseCaseInterface::class,
+            \packages\Domain\Application\Message\TaskSendInteractor::class
+        );
     }
 }

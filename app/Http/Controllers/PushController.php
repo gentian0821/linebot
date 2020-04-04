@@ -2,38 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Services\MessageApiService;
-use App\Task;
+use packages\UseCase\Task\Send\TaskSendUseCaseInterface;
 
 class PushController extends Controller
 {
-    private $message_api;
-
-    public function __construct(MessageApiService $message_api)
-    {
-        $this->message_api = $message_api;
-    }
-
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @param TaskSendUseCaseInterface $interactor
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function index()
+    public function index(TaskSendUseCaseInterface $interactor)
     {
-        $tasks = Task::where('reserved_at', date('Y-m-d H:00:00'))->get();
-
-        $message_objects = [];
-        foreach ($tasks as $task) {
-            $message_objects[$task->send_to][] = [
-                'type' => 'text',
-                'text' => $task->send_message,
-            ];
-        }
-
-        foreach ($message_objects as $send_to => $messages) {
-            $this->message_api->push($messages, $send_to);
-        }
+        $interactor->handle();
 
         return response()->json(['ok']);
     }
