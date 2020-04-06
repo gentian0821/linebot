@@ -24,7 +24,12 @@ class TaskRepository implements TaskRepositoryInterface
      */
     public function sendMessage(MessageApiService $messageService, Collection $tasks): void
     {
+        if (!$tasks) {
+            return;
+        }
+
         $message_objects = [];
+
         foreach ($tasks as $task) {
             $message_objects[$task->send_to][] = [
                 'type' => 'text',
