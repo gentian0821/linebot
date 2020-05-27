@@ -35,6 +35,10 @@ class ScheduleRepository implements ScheduleRepositoryInterface
      */
     public function sendMessage(MessageApiService $messageService, array $events): void
     {
+        if (!$events) {
+            return;
+        }
+
         $result = '今日の予定だよー！';
         foreach ($events as $e) {
             if (!$e->getSummary()) {

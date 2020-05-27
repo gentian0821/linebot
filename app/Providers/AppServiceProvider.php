@@ -52,5 +52,15 @@ class AppServiceProvider extends ServiceProvider
             \packages\UseCase\Task\Send\TaskSendUseCaseInterface::class,
             \packages\Domain\Application\Message\TaskSendInteractor::class
         );
+
+        $this->app->singleton(
+            \packages\Domain\Domain\Weather\WeatherRepositoryInterface::class,
+            \packages\Infrastructure\Weather\WeatherRepository::class
+        );
+
+        $this->app->bind(
+            \packages\UseCase\Weather\Send\WeatherSendUseCaseInterface::class,
+            \packages\Domain\Application\Weather\WeatherSendInteractor::class
+        );
     }
 }
