@@ -34,16 +34,19 @@ class PushWeatherController extends Controller
 
         Log::info($weather_info);
 
+        $image_url = str_replace('http://','https://', $weather_info['forecasts'][0]['image']['url']);
+//        $image = file_get_contents($weather_info['forecasts'][0]['image']['url']);
+//        file_put_contents('./img/' . )
         $message = [
             [
                 'type' => 'text',
                 'text' => $weather_info['title'],
             ],
-//            [
-//                'type' => 'image',
-//                'originalContentUrl' => $weather_info['forecasts'][0]['image']['url'],
-//                'previewImageUrl'    => $weather_info['forecasts'][0]['image']['url']
-//            ],
+            [
+                'type' => 'image',
+                'originalContentUrl' => $image_url,
+                'previewImageUrl'    => $image_url
+            ],
             [
                 'type' => 'text',
                 'text' => $weather_info['forecasts'][0]['telop'],
