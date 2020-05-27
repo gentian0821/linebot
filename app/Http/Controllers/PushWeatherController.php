@@ -34,9 +34,13 @@ class PushWeatherController extends Controller
 
         Log::info($weather_info);
 
-        $image_url = str_replace('http://','https://', $weather_info['forecasts'][0]['image']['url']);
-//        $image = file_get_contents($weather_info['forecasts'][0]['image']['url']);
-//        file_put_contents('./img/' . )
+        $image_url = $weather_info['forecasts'][0]['image']['url'];
+        $base_name = basename($image_url);
+        if (!file_exists('./img/' . $base_name)) {
+            $image = file_get_contents($weather_info['forecasts'][0]['image']['url']);
+            file_put_contents('./img/' . $base_name, $image);
+        }
+
         $message = [
             [
                 'type' => 'text',
@@ -44,17 +48,17 @@ class PushWeatherController extends Controller
             ],
             [
                 'type' => 'image',
-                'originalContentUrl' => $image_url,
-                'previewImageUrl'    => $image_url
+                'originalContentUrl' => 'https://linebot-fayc4.herokuapp.com/img/' . $base_name,
+                'previewImageUrl'    => 'https://linebot-fayc4.herokuapp.com/img/' . $base_name,
             ],
             [
                 'type' => 'text',
                 'text' => $weather_info['forecasts'][0]['telop'],
             ],
-            [
-                'type' => 'text',
-                'text' => $weather_info['description']['text'],
-            ],
+//            [
+//                'type' => 'text',
+//                'text' => $weather_info['description']['text'],
+//            ],
         ];
 
         $this->message_api->push($message, Config::get('const.calendar_send_to'));
