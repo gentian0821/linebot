@@ -2,10 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\MessageApiService;
+use App\Services\AnalyzeMessageService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class CallbackController extends Controller
 {
+    private $message_api;
+
+    private $analyze_message;
+
+    public function __construct(MessageApiService $message_api, AnalyzeMessageService $analyze_message)
+    {
+        $this->message_api = $message_api;
+        $this->analyze_message = $analyze_message;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -13,19 +26,7 @@ class CallbackController extends Controller
      */
     public function index()
     {
-        return response()->json([
-            [ 'name' => 'Yohei' ]
-        ]);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return response()->json(['ok']);
     }
 
     /**
@@ -36,95 +37,17 @@ class CallbackController extends Controller
      */
     public function store(Request $request)
     {
-        $access_token = '83lp46KV9G7kxQwpadkxMI6+4X6d+ByUAY/pkAqZ+QTYbmknMS13VNiXDWPNp7WorKSGwA+aRKXxdHyipGRTeZ6nX5o4u5t1CGa0ciTuAykVTxJ4LS4gm9+APoQFqCfLltgJGtLqzwm0fOUuTWrCYQdB04t89/1O/w1cDnyilFU=';
+        $param = $request->input();
 
-//        $param = $request->input();
-//        $message = $param['events'][0]['message'];
-//        $reply_token = $param["events"][0]["replyToken"];
-//        $post_data = [
-//            "replyToken" => $reply_token,
-//            "messages" => [
-//                [
-//                    "type" => "text",
-//                    "text" => $message["text"]
-//                ]
-//            ]
-//        ];
+        Log::info($param);
 
-        //APIから送信されてきたイベントオブジェクトを取得
-        $json_string = file_get_contents('php://input');
-        Log::info($json_string);
-        $json_obj = json_decode($json_string);
-        //イベントオブジェクトから必要な情報を抽出
-        $message = $json_obj->{"events"}[0]->{"message"};
-        $reply_token = $json_obj->{"events"}[0]->{"replyToken"};
-        //ユーザーからのメッセージに対し、オウム返しをする
-        $post_data = [
-            "replyToken" => $reply_token,
-            "messages" => [
-                [
-                    "type" => "text",
-                    "text" => $message->{"text"}
-                ]
-            ]
-        ];
+        $messages = $this->analyze_message->reply_message($param['events'][0]);
 
-        //curlを使用してメッセージを返信する
-        $ch = curl_init("https://api.line.me/v2/bot/message/reply");
-        curl_setopt($ch, CURLOPT_POST, true);
-        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($post_data));
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-            'Content-Type: application/json; charser=UTF-8',
-            'Authorization: Bearer ' . $access_token
-        ));
-        $result = curl_exec($ch);
-        curl_close($ch);
+        $response = $this->message_api->reply($messages, $param["events"][0]['replyToken']);
+
+        Log::info($response->getBody());
+
+        return response()->json(['ok']);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 }

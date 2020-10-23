@@ -18,3 +18,13 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::resource('callback', 'CallbackController');
+
+Route::resource('push', 'PushController');
+
+Route::resource('schedule', 'ScheduleController');
+
+Route::resource('weather', 'PushWeatherController');
+
+Route::resource('location', 'LocationController');
+
+Route::resource('device', 'DeviceController');
