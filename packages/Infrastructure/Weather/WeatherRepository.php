@@ -71,7 +71,7 @@ class WeatherRepository implements WeatherRepositoryInterface
             ],
             [
                 'type' => 'flex',
-                'altText' => '5日間の天気だよー',
+                'altText' => '直近5日間の天気だよー',
                 'contents' => [
                     'type' => 'bubble',
                     'header' => [
