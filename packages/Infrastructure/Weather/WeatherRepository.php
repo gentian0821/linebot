@@ -10,6 +10,13 @@ use Carbon\Carbon;
 
 class WeatherRepository implements WeatherRepositoryInterface
 {
+    private $messageApiService;
+
+    public function __construct(MessageApiService $messageApiService)
+    {
+        $this->messageApiService = $messageApiService;
+    }
+
     /**
      * @return array
      */
@@ -32,11 +39,7 @@ class WeatherRepository implements WeatherRepositoryInterface
         return json_decode($response->getBody(), true);
     }
 
-    /**
-     * @param MessageApiService $messageService
-     * @param array $weather_info
-     */
-    public function sendMessage(MessageApiService $messageService, array $weather_info): void
+    public function sendMessage(array $weather_info): void
     {
         if (!$weather_info) {
             return;
@@ -93,7 +96,7 @@ class WeatherRepository implements WeatherRepositoryInterface
             ],
         ];
 
-        $messageService->push($message, Config::get('const.calendar_send_to'));
+        $this->messageApiService->push($message, Config::get('const.calendar_send_to'));
     }
 
     private function make_1day_flex_messages(array $weather, Carbon $carbon, string $image_url): array
