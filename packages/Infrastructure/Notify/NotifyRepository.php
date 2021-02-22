@@ -15,12 +15,15 @@ class NotifyRepository implements NotifyRepositoryInterface
             return;
         }
 
-        $messageService->push(
-            [
-                'type' => 'text',
-                'text' => $message,
-            ],
-            Config::get('fayc4_send_to')
-        );
+        $message_objects = [];
+
+        $message_objects[Config::get('fayc4_send_to')][] = [
+            'type' => 'text',
+            'text' => $message,
+        ];
+
+        foreach ($message_objects as $send_to => $messages) {
+            $messageService->push($messages, $send_to);
+        }
     }
 }
