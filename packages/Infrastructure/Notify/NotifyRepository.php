@@ -16,15 +16,21 @@ class NotifyRepository implements NotifyRepositoryInterface
             return;
         }
 
-        $message = "From: " . $params['from'] . "\nSubject: " . $params['subject'] .
-            "\n\n" . explode('-------', $params['message'])[0];
+        Log::info(print_r(Config::get('const.fayc4_send_to'), true));
+        Log::info(print_r($params, true));
 
+        $message = "From: " . $params['from'] . "\nSubject: " . $params['subject'] . "\n\n" . explode('-------', $params['message'])[0];
+        $message_objects = [];
 
-        $messageService->push([
-                'type' => 'text',
-                'text' => $message,
-            ],
-            Config::get('const.fayc4_send_to')
-        );
+        $message_objects[Config::get('const.fayc4_send_to')][] = [
+            'type' => 'text',
+            'text' => $message,
+        ];
+
+        foreach ($message_objects as $send_to => $messages) {
+            Log::info(print_r($send_to, true));
+            Log::info(print_r($messages, true));
+            $messageService->push($messages, $send_to);
+        }
     }
 }
