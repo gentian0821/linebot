@@ -16,8 +16,8 @@ class NotifySendInteractor implements NotifySendUseCaseInterface
         $this->notifyRepository = $notifyRepository;
     }
 
-    public function handle(string $message)
+    public function handle(array $params)
     {
-        $this->notifyRepository->sendMessage(new MessageApiService(), $message);
+        $this->notifyRepository->sendMessage(new MessageApiService(), $params);
     }
 }

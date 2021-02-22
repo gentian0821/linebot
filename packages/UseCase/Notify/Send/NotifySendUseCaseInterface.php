@@ -4,5 +4,5 @@ namespace packages\UseCase\Notify\Send;
 
 interface NotifySendUseCaseInterface
 {
-    public function handle(string $message);
+    public function handle(array $params);
 }

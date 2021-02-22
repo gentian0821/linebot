@@ -10,25 +10,21 @@ use packages\Domain\Domain\Notify\NotifyRepositoryInterface;
 
 class NotifyRepository implements NotifyRepositoryInterface
 {
-    public function sendMessage(MessageApiService $messageService, string $message): void
+    public function sendMessage(MessageApiService $messageService, array $params): void
     {
-        if (!$message) {
+        if (!$params) {
             return;
         }
 
-        Log::info(print_r(Config::get('const.fayc4_send_to'), true));
-        Log::info(print_r($message, true));
-        $message_objects = [];
+        $message = "From: " . $params['from'] . "\nSubject: " . $params['subject'] .
+            "\n\n" . explode('-------', $params['message'])[0];
 
-        $message_objects[Config::get('const.fayc4_send_to')][] = [
-            'type' => 'text',
-            'text' => $message,
-        ];
 
-        foreach ($message_objects as $send_to => $messages) {
-            Log::info(print_r($send_to, true));
-            Log::info(print_r($messages, true));
-            $messageService->push($messages, $send_to);
-        }
+        $messageService->push([
+                'type' => 'text',
+                'text' => $message,
+            ],
+            Config::get('const.fayc4_send_to')
+        );
     }
 }

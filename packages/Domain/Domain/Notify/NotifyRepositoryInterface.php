@@ -6,5 +6,5 @@ use App\Services\MessageApiService;
 
 interface NotifyRepositoryInterface
 {
-    public function sendMessage(MessageApiService $messageService, string $message): void;
+    public function sendMessage(MessageApiService $messageService, array $params): void;
 }
