@@ -2,7 +2,6 @@
 
 namespace packages\Infrastructure\Notify;
 
-
 use App\Services\MessageApiService;
 use Illuminate\Support\Facades\Config;
 
@@ -25,7 +24,7 @@ class NotifyRepository implements NotifyRepositoryInterface
             "\n\n" . explode('-------', $params['message'])[0];
 
         $this->messageApiService->push(
-            ['type' => 'text', 'text' => $message,],
+            [['type' => 'text', 'text' => $message]],
             Config::get('const.fayc4_send_to')
         );
     }
