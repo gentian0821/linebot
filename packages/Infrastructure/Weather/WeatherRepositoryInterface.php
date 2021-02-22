@@ -1,6 +1,6 @@
 <?php
 
-namespace packages\Domain\Domain\Weather;
+namespace packages\Infrastructure\Weather;
 
 interface WeatherRepositoryInterface
 {

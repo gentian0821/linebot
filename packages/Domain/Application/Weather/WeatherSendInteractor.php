@@ -2,12 +2,9 @@
 
 namespace packages\Domain\Application\Weather;
 
-use App\Services\MessageApiService;
-use packages\Domain\Domain\Weather\WeatherRepositoryInterface;
-use packages\UseCase\Weather\Send\WeatherSendUseCaseInterface;
+use packages\Infrastructure\Weather\WeatherRepositoryInterface;
 
-
-class WeatherSendInteractor implements WeatherSendUseCaseInterface
+class WeatherSendInteractor
 {
     private $weatherRepository;
 

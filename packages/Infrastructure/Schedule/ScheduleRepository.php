@@ -2,18 +2,19 @@
 
 namespace packages\Infrastructure\Schedule;
 
-
-use packages\Domain\Domain\Schedule\ScheduleRepositoryInterface;
 use Google_Service_Calendar;
 use Illuminate\Support\Facades\Config;
 use App\Services\MessageApiService;
 
 class ScheduleRepository implements ScheduleRepositoryInterface
 {
-    /**
-     * @param Google_Service_Calendar $service
-     * @return array
-     */
+    private $messageApiService;
+
+    public function __construct(MessageApiService $messageApiService)
+    {
+        $this->messageApiService = $messageApiService;
+    }
+
     public function fetchEvents(Google_Service_Calendar $service): array
     {
         $params = array(
@@ -29,11 +30,7 @@ class ScheduleRepository implements ScheduleRepositoryInterface
         return $results->getItems();
     }
 
-    /**
-     * @param MessageApiService $messageService
-     * @param array $events
-     */
-    public function sendMessage(MessageApiService $messageService, array $events): void
+    public function sendMessage(array $events): void
     {
         if (!$events) {
             return;
@@ -48,6 +45,9 @@ class ScheduleRepository implements ScheduleRepositoryInterface
             $result .= "\n・ " . $e->getSummary();
         }
 
-        $messageService->push([['type' => 'text', 'text' => $result]], Config::get('const.calendar_send_to'));
+        $this->messageApiService->push(
+            [['type' => 'text', 'text' => $result]],
+            Config::get('const.calendar_send_to')
+        );
     }
 }

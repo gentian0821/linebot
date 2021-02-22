@@ -3,7 +3,6 @@
 namespace packages\Infrastructure\Weather;
 
 use GuzzleHttp\Client;
-use packages\Domain\Domain\Weather\WeatherRepositoryInterface;
 use App\Services\MessageApiService;
 use Illuminate\Support\Facades\Config;
 use Carbon\Carbon;
@@ -17,9 +16,6 @@ class WeatherRepository implements WeatherRepositoryInterface
         $this->messageApiService = $messageApiService;
     }
 
-    /**
-     * @return array
-     */
     public function forecasts(): array
     {
         $options = [

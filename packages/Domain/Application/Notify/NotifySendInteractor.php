@@ -2,12 +2,9 @@
 
 namespace packages\Domain\Application\Notify;
 
-use App\Services\MessageApiService;
-use packages\Domain\Domain\Notify\NotifyRepositoryInterface;
-use packages\UseCase\Notify\Send\NotifySendUseCaseInterface;
+use packages\Infrastructure\Notify\NotifyRepositoryInterface;
 
-
-class NotifySendInteractor implements NotifySendUseCaseInterface
+class NotifySendInteractor
 {
     private $notifyRepository;
 
@@ -18,6 +15,6 @@ class NotifySendInteractor implements NotifySendUseCaseInterface
 
     public function handle(array $params)
     {
-        $this->notifyRepository->sendMessage(new MessageApiService(), $params);
+        $this->notifyRepository->sendMessage($params);
     }
 }
