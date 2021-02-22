@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use packages\UseCase\Notify\Send\NotifySendUseCaseInterface;
+use packages\Domain\Application\Notify\NotifySendInteractor;
 
 class NotifyController extends Controller
 {
-    public function index(Request $request, NotifySendUseCaseInterface $interactor)
+    public function index(Request $request, NotifySendInteractor $interactor)
     {
         $interactor->handle($request->input());
 

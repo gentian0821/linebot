@@ -2,18 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use packages\UseCase\Weather\Send\WeatherSendUseCaseInterface;
+use packages\Domain\Application\Weather\WeatherSendInteractor;
 
 class PushWeatherController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @param WeatherSendUseCaseInterface $interactor
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index(WeatherSendUseCaseInterface $interactor)
+    public function index(WeatherSendInteractor $interactor)
     {
         $interactor->handle();
 

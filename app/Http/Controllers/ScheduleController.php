@@ -2,15 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use packages\UseCase\Schedule\Send\ScheduleSendUseCaseInterface;
+use packages\Domain\Application\Schedule\ScheduleSendInteractor;
 
 class ScheduleController extends Controller
 {
-    /**
-     * @param ScheduleSendUseCaseInterface $interactor
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function index(ScheduleSendUseCaseInterface $interactor)
+    public function index(ScheduleSendInteractor $interactor)
     {
         $interactor->handle();
 

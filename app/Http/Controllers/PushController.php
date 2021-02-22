@@ -2,15 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use packages\UseCase\Task\Send\TaskSendUseCaseInterface;
+use packages\Domain\Application\Message\TaskSendInteractor;
 
 class PushController extends Controller
 {
-    /**
-     * @param TaskSendUseCaseInterface $interactor
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function index(TaskSendUseCaseInterface $interactor)
+    public function index(TaskSendInteractor $interactor)
     {
         $interactor->handle();
 
