@@ -7,7 +7,7 @@ use packages\UseCase\Notify\Send\NotifySendUseCaseInterface;
 
 class NotifyController extends Controller
 {
-    public function store(Request $request, NotifySendUseCaseInterface $interactor)
+    public function index(Request $request, NotifySendUseCaseInterface $interactor)
     {
         $interactor->handle($request->input('message'));
 

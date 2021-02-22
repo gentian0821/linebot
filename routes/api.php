@@ -29,4 +29,4 @@ Route::resource('location', 'LocationController');
 
 Route::resource('device', 'DeviceController');
 
-Route::post('notify', 'NotifyController');
+Route::post('notify', 'NotifyController@index');
