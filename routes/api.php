@@ -28,3 +28,5 @@ Route::resource('weather', 'PushWeatherController');
 Route::resource('location', 'LocationController');
 
 Route::resource('device', 'DeviceController');
+
+Route::resource('notify', 'NotifyController');

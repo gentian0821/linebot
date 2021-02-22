@@ -29,6 +29,8 @@ return [
 
     'test_send_to' => env("TEST_SEND_TO"),
 
+    'fayc4_send_to' => env('FAYC4_SEND_TO'),
+
     'open_weather_base_url' => 'https://api.openweathermap.org',
 
     'open_weather_image_url' => 'https://openweathermap.org/img/w/',
