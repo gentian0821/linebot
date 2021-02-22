@@ -16,11 +16,11 @@ class NotifyRepository implements NotifyRepositoryInterface
             return;
         }
 
-        Log::info(print_r(Config::get('faycfour_send_to'), true));
+        Log::info(print_r(Config::get('const.fayc4_send_to'), true));
         Log::info(print_r($message, true));
         $message_objects = [];
 
-        $message_objects[Config::get('faycfour_send_to')][] = [
+        $message_objects[Config::get('const.fayc4_send_to')][] = [
             'type' => 'text',
             'text' => $message,
         ];
