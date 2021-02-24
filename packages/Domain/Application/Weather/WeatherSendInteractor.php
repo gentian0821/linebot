@@ -2,20 +2,18 @@
 
 namespace packages\Domain\Application\Weather;
 
-use packages\Infrastructure\Weather\WeatherRepositoryInterface;
+use packages\UseCase\Weather\WeatherUseCase;
 
 class WeatherSendInteractor
 {
-    private $weatherRepository;
+    private $weatherUseCase;
 
-    public function __construct(WeatherRepositoryInterface $weatherRepository) {
-        $this->weatherRepository = $weatherRepository;
+    public function __construct(WeatherUseCase $weatherUseCase) {
+        $this->weatherUseCase = $weatherUseCase;
     }
 
-    public function handle()
+    public function handle(): void
     {
-        $weather_info = $this->weatherRepository->forecasts();
-
-        $this->weatherRepository->sendMessage($weather_info);
+        $this->weatherUseCase->send();
     }
 }

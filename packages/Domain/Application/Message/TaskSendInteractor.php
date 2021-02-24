@@ -2,21 +2,19 @@
 
 namespace packages\Domain\Application\Message;
 
-use packages\Infrastructure\Message\TaskRepositoryInterface;
+use packages\UseCase\Task\TaskUseCase;
 
 class TaskSendInteractor
 {
-    private $taskRepository;
+    private $taskUseCase;
 
-    public function __construct(TaskRepositoryInterface $taskRepository)
+    public function __construct(TaskUseCase $taskUseCase)
     {
-        $this->taskRepository = $taskRepository;
+        $this->taskUseCase = $taskUseCase;
     }
 
-    public function handle()
+    public function handle(): void
     {
-        $events = $this->taskRepository->fetch();
-
-        $this->taskRepository->sendMessage($events);
+        $this->taskUseCase->send();
     }
 }

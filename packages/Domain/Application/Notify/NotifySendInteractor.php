@@ -2,19 +2,19 @@
 
 namespace packages\Domain\Application\Notify;
 
-use packages\Infrastructure\Notify\NotifyRepositoryInterface;
+use packages\UseCase\Notify\NotifyUseCase;
 
 class NotifySendInteractor
 {
-    private $notifyRepository;
+    private $notifyUseCase;
 
-    public function __construct(NotifyRepositoryInterface $notifyRepository)
+    public function __construct(NotifyUseCase $notifyUseCase)
     {
-        $this->notifyRepository = $notifyRepository;
+        $this->notifyUseCase = $notifyUseCase;
     }
 
     public function handle(array $params)
     {
-        $this->notifyRepository->sendMessage($params);
+        $this->notifyUseCase->send($params);
     }
 }

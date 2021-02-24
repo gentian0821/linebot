@@ -2,7 +2,6 @@
 
 namespace packages\Infrastructure\Weather;
 
-use GuzzleHttp\Client;
 use App\Services\MessageApiService;
 use Illuminate\Support\Facades\Config;
 use Carbon\Carbon;
@@ -14,25 +13,6 @@ class WeatherRepository implements WeatherRepositoryInterface
     public function __construct(MessageApiService $messageApiService)
     {
         $this->messageApiService = $messageApiService;
-    }
-
-    public function forecasts(): array
-    {
-        $options = [
-            'headers' => [
-                'Content-Type' => 'application/json; charser=UTF-8',
-            ],
-        ];
-
-        $client = new Client(['base_uri' => Config::get('const.open_weather_base_url')]);
-
-        $weather_api = Config::get('const.open_weather_api_weather') . '?zip=112-0011,JP&units=metric&lang=ja&APPID=';
-
-        $api_key = Config::get('const.open_weather_api_key');
-
-        $response = $client->request('GET', $weather_api . $api_key, $options);
-
-        return json_decode($response->getBody(), true);
     }
 
     public function sendMessage(array $weather_info): void

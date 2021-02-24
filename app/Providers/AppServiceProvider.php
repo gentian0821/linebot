@@ -50,6 +50,11 @@ class AppServiceProvider extends ServiceProvider
         );
 
         $this->app->singleton(
+            \packages\Infrastructure\Weather\OpenWeatherRepositoryInterface::class,
+            \packages\Infrastructure\Weather\OpenWeatherRepository::class
+        );
+
+        $this->app->singleton(
             \packages\Infrastructure\Notify\NotifyRepositoryInterface::class,
             \packages\Infrastructure\Notify\NotifyRepository::class
         );

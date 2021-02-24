@@ -2,31 +2,19 @@
 
 namespace packages\Domain\Application\Schedule;
 
-use packages\Infrastructure\Schedule\ScheduleRepositoryInterface;
-use Google_Client;
-use Google_Service_Calendar;
-use Illuminate\Support\Facades\Config;
+use packages\UseCase\Schedule\ScheduleUseCase;
 
 class ScheduleSendInteractor
 {
-    private $scheduleRepository;
+    private $scheduleUseCase;
 
-    public function __construct(ScheduleRepositoryInterface $scheduleRepository)
+    public function __construct(ScheduleUseCase $scheduleUseCase)
     {
-        $this->scheduleRepository = $scheduleRepository;
+        $this->scheduleUseCase = $scheduleUseCase;
     }
 
     public function handle()
     {
-        $json = json_decode(Config::get('const.google_api_credential'), true);
-        $googleClient = new Google_Client();
-        $googleClient->setApplicationName('calendar');
-        $googleClient->setAuthConfig($json);
-        $googleClient->setAccessType('offline');
-        $googleClient->setScopes(Google_Service_Calendar::CALENDAR_READONLY);
-
-        $events = $this->scheduleRepository->fetchEvents(new Google_Service_Calendar($googleClient));
-
-        $this->scheduleRepository->sendMessage($events);
+        $this->scheduleUseCase->send();
     }
 }
