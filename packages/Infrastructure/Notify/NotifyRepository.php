@@ -29,10 +29,10 @@ class NotifyRepository implements NotifyRepositoryInterface
 
     private function makeMessage(array $params): string
     {
-        if (Str::contains('登下校', $params['subject']))
+        if (Str::contains($params['subject'], '登下校'))
         {
             $message = explode('-------', $params['message'])[0];
-            if (Str::contains('登校', $message)) {
+            if (Str::contains($message, '登校')) {
                 return 'ゆいちゃんが無事登校したよー️' . $this->picture_letter("1F604") .
                     "\n\n" . $message;
             }
@@ -40,13 +40,13 @@ class NotifyRepository implements NotifyRepositoryInterface
             return 'ゆいかが帰ってくるぞー❗️❗️' . "\n\n" . $message;
         }
 
-        if (Str::contains('そろばん塾：入室通知', $params['subject']))
+        if (Str::contains($params['subject'], 'そろばん塾：入室通知'))
         {
             return 'ゆいちゃんが無事そろばんに行ったよー️' . $this->picture_letter("1F604") .
                     "\n\n" . $params['message'];
         }
 
-        if (Str::contains('そろばん塾：退室通知', $params['subject']))
+        if (Str::contains($params['subject'], 'そろばん塾：退室通知'))
         {
             return 'ゆいちゃんがそろばんから帰ってくるぞー️' . $this->picture_letter("1F61C") .
                 "\n\n" . $params['message'];
