@@ -276,7 +276,7 @@ class AnalyzeMessageService
      */
     private function image($message)
     {
-        $message_api = new MessageApiService();
+        $message_api = new MessageApiDataService();
         $response = $message_api->contents($message['id']);
 
         $vision_api = new ImageRecognitionApiService();
